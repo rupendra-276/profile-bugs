@@ -15,7 +15,7 @@
 // //     headline: "",
 // //     location: "",
 // //     email: "",
-// //     phoneNumbers: [],
+// //     phone: [],
 // //     socialLinks: { github: "", website: "" },
 // //     cover: "",
 // //     avatar: "",
@@ -24,7 +24,7 @@
 // //   const [errors, setErrors] = useState({
 // //     name: "",
 // //     location: "",
-// //     phoneNumbers: [],
+// //     phone: [],
 // //     website: "",
 // //     cover: "",
 // //     avatar: "",
@@ -46,7 +46,7 @@
 // //         headline: user?.headline || "",
 // //         location: user?.location || "",
 // //         email: user?.email || "",
-// //         phoneNumbers: user?.phone || [],
+// //         phone: user?.phone || [],
 // //         socialLinks: {
 // //           github: user?.socialLinks?.github || "",
 // //           website: user?.socialLinks?.website || "",
@@ -57,7 +57,7 @@
 // //       // init phone errors array
 // //       setErrors((prev) => ({
 // //         ...prev,
-// //         phoneNumbers: (user?.phone || []).map(() => ""),
+// //         phone: (user?.phone || []).map(() => ""),
 // //       }));
 // //     }
 // //   }, [user]);
@@ -72,28 +72,28 @@
 
 // //   // phone input handling
 // //   const handlePhoneChange = (index, value) => {
-// //     const updated = [...formData.phoneNumbers];
+// //     const updated = [...formData.phone];
 // //     updated[index] = value;
-// //     setFormData((prev) => ({ ...prev, phoneNumbers: updated }));
+// //     setFormData((prev) => ({ ...prev, phone: updated }));
 
 // //     // validate phone live
-// //     const phoneErrs = [...(errors.phoneNumbers || [])];
+// //     const phoneErrs = [...(errors.phone || [])];
 // //     phoneErrs[index] = validatePhone(value)
 // //       ? ""
 // //       : "Invalid phone number (must be 10 digits or valid international format)";
-// //     setErrors((prev) => ({ ...prev, phoneNumbers: phoneErrs }));
+// //     setErrors((prev) => ({ ...prev, phone: phoneErrs }));
 // //   };
 
 // //   // add max 2 phones
 // //   const addPhoneNumber = () => {
-// //     if (formData.phoneNumbers.length >= 2) return;
+// //     if (formData.phone.length >= 2) return;
 // //     setFormData((prev) => ({
 // //       ...prev,
-// //       phoneNumbers: [...prev.phoneNumbers, ""],
+// //       phone: [...prev.phone, ""],
 // //     }));
 // //     setErrors((prev) => ({
 // //       ...prev,
-// //       phoneNumbers: [...(prev.phoneNumbers || []), ""],
+// //       phone: [...(prev.phone || []), ""],
 // //     }));
 // //   };
 
@@ -156,7 +156,7 @@
 // //     const newErrors = {
 // //       name: "",
 // //       location: "",
-// //       phoneNumbers: [],
+// //       phone: [],
 // //       website: "",
 // //       cover: "",
 // //       avatar: "",
@@ -174,7 +174,7 @@
 // //     }
 
 // //     // phone validation
-// //     newErrors.phoneNumbers = (formData.phoneNumbers || []).map((p) =>
+// //     newErrors.phone = (formData.phone || []).map((p) =>
 // //       p
 // //         ? validatePhone(p)
 // //           ? ""
@@ -201,7 +201,7 @@
 // //       newErrors.website ||
 // //       newErrors.cover ||
 // //       newErrors.avatar ||
-// //       newErrors.phoneNumbers.some(Boolean);
+// //       newErrors.phone.some(Boolean);
 // //     return !hasErr;
 // //   };
 
@@ -211,7 +211,7 @@
 
 // //     const payload = {
 // //       ...formData,
-// //       phone: formData.phoneNumbers,
+// //       phone: formData.phone,
 // //     };
 // //     onSave(payload);
 // //     onClose();
@@ -374,7 +374,7 @@
 // //             <label className="block text-sm font-medium mb-1 text-white">
 // //               Phone Numbers
 // //             </label>
-// //             {formData.phoneNumbers.map((phone, idx) => (
+// //             {formData.phone.map((phone, idx) => (
 // //               <div key={idx} className="mb-2">
 // //                 <InputWithCount
 // //                   type="tel"
@@ -385,11 +385,11 @@
 // //                     handlePhoneChange(idx, clean);
 // //                   }}
 // //                   maxLength={20}
-// //                   error={errors.phoneNumbers && errors.phoneNumbers[idx]}
+// //                   error={errors.phone && errors.phone[idx]}
 // //                 />
 // //               </div>
 // //             ))}
-// //             {formData.phoneNumbers.length < 2 && (
+// //             {formData.phone.length < 2 && (
 // //               <button
 // //                 type="button"
 // //                 onClick={addPhoneNumber}
@@ -467,7 +467,7 @@ export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
     headline: "",
     location: "",
     email: "",
-    phoneNumbers: [],
+    phone: [],
     socialLinks: { github: "", website: "" },
     cover: "",
     avatar: "",
@@ -476,7 +476,7 @@ export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
   const [errors, setErrors] = useState({
     name: "",
     location: "",
-    phoneNumbers: [],
+    phone: [],
     website: "",
     github: "",
     cover: "",
@@ -498,7 +498,7 @@ export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
         headline: user?.headline || "",
         location: user?.location || "",
         email: user?.email || "",
-        phoneNumbers: user?.phone || [],
+        phone: user?.phone || [],
         socialLinks: {
           github: user?.socialLinks?.github || "",
           website: user?.socialLinks?.website || "",
@@ -508,7 +508,7 @@ export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
       });
       setErrors((prev) => ({
         ...prev,
-        phoneNumbers: (user?.phone || []).map(() => ""),
+        phone: (user?.phone || []).map(() => ""),
       }));
     }
   }, [user]);
@@ -524,24 +524,24 @@ export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
 
   // Phone handling
   const handlePhoneChange = (index, value) => {
-    const updated = [...formData.phoneNumbers];
+    const updated = [...formData.phone];
     updated[index] = value;
-    setFormData((prev) => ({ ...prev, phoneNumbers: updated }));
+    setFormData((prev) => ({ ...prev, phone: updated }));
 
-    const phoneErrs = [...(errors.phoneNumbers || [])];
+    const phoneErrs = [...(errors.phone || [])];
     phoneErrs[index] = value ? (validatePhone(value) ? "" : "Invalid phone number") : "";
-    setErrors((prev) => ({ ...prev, phoneNumbers: phoneErrs }));
+    setErrors((prev) => ({ ...prev, phone: phoneErrs }));
   };
 
   const addPhoneNumber = () => {
-    if (formData.phoneNumbers.length >= 2) return;
+    if (formData.phone.length >= 2) return;
     setFormData((prev) => ({
       ...prev,
-      phoneNumbers: [...prev.phoneNumbers, ""],
+      phone: [...prev.phone, ""],
     }));
     setErrors((prev) => ({
       ...prev,
-      phoneNumbers: [...(prev.phoneNumbers || []), ""],
+      phone: [...(prev.phone || []), ""],
     }));
   };
 
@@ -641,7 +641,7 @@ const removeavatar = () => {
     const newErrors = {
       name: "",
       location: "",
-      phoneNumbers: [],
+      phone: [],
       website: "",
       github: "",
       cover: "",
@@ -657,7 +657,7 @@ const removeavatar = () => {
       newErrors.location = "Location is required.";
     }
 
-    newErrors.phoneNumbers = (formData.phoneNumbers || []).map((p) =>
+    newErrors.phone = (formData.phone || []).map((p) =>
       p ? (validatePhone(p) ? "" : "Invalid phone number") : ""
     );
 
@@ -684,7 +684,7 @@ const removeavatar = () => {
       newErrors.github ||
       newErrors.cover ||
       newErrors.avatar ||
-      newErrors.phoneNumbers.some(Boolean);
+      newErrors.phone.some(Boolean);
 
     return !hasErr;
   };
@@ -695,7 +695,7 @@ const removeavatar = () => {
 
     const payload = {
       ...formData,
-      phone: formData.phoneNumbers,
+      phone: formData.phone,
     };
     onSave(payload);
     onClose();
@@ -851,7 +851,7 @@ const removeavatar = () => {
             <label className="block text-sm font-medium mb-1 text-white">
               Phone Numbers
             </label>
-            {formData.phoneNumbers.map((phone, idx) => (
+            {formData.phone.map((phone, idx) => (
               <div key={idx} className="mb-2">
                 <InputWithCount
                   type="tel"
@@ -863,11 +863,11 @@ const removeavatar = () => {
                     handlePhoneChange(idx, clean);
                   }}
                   maxLength={20}
-                  error={errors.phoneNumbers && errors.phoneNumbers[idx]}
+                  error={errors.phone && errors.phone[idx]}
                 />
               </div>
             ))}
-            {formData.phoneNumbers.length < 2 && (
+            {formData.phone.length < 2 && (
               <button
                 type="button"
                 onClick={addPhoneNumber}

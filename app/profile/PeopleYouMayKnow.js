@@ -160,6 +160,7 @@ function ProfileAvatar({ name, image }) {
 
 
 
+import {FIELD_LIMITS} from '../constents/constents';
 
 import { TruncateText } from "../helper/truncateText";
 export default function PeopleYouMayKnow({ users = [], currentUserId = null, limit = 4 }) {
@@ -180,29 +181,15 @@ export default function PeopleYouMayKnow({ users = [], currentUserId = null, lim
               <Link href={`/${person.username}`} className="flex items-center gap-3">
                 <ProfileAvatar name={person.name} image={person.avatar || person.avatar} />
                 <div>
-                  <h4 className="font-semibold text-white hover:underline">{person.name}</h4>
+                  <h4 className="font-semibold text-white hover:underline">{TruncateText(person.name, FIELD_LIMITS.name)}</h4>
                   <p className="text-sm text-gray-100">{TruncateText(person.headline || "", 40)}</p>
                 </div>
               </Link>
             </div>
                 <p className="text-gray-200 mt-2">
-              {person.about && (
-                <span>
-                  {person.about.length > 50 ? (
-                    <span className="leading-[10px]">
-                      {person.about.slice(0, 50)}....
-                      <Link
-                        href={`/${person.username}`}
-                        className="ml-2 text-blue-300  hover:underline"
-                      >
-                        more
-                      </Link>
-                    </span>
-                  ) : (
-                    person.about
-                  )}
-                </span>
-              )}
+                  
+                  {person.about && TruncateText(person.about, FIELD_LIMITS.youmaynowabout, true, "more")}
+            
             </p>
 
 

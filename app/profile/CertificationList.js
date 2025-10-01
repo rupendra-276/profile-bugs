@@ -86,22 +86,24 @@ import React from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
+import EmptyState from "../components/EmptyState";
 
 export default function CertificationList({ certifications = [], onAdd, onEdit, onDelete, profileUser }) {
   const currentUser = useSelector((s) => s.users?.currentUser);
   const isOwner = currentUser?.id === profileUser?.id;
 
-if (!certifications.length) {
-  return (
-    <div className="text-center flex flex-col mt-6 items-center justify-center">
-      <Image src="/Happy Girl.png" alt="certificate" width={147} height={180} /> 
-      <p className="text-gray-100 py-4 text-sm">No certifications added yet.</p>
-    </div>
-  );
-}
+  if (!certifications?.length) {
+    return (
+      <EmptyState
+        image="/Happy Girl.png" 
+        alt="certificate" 
+        message="No certifications added yet." 
+      />
+    );
+  }
 
   return (
-    <div className="space-y-3">
+    <div className="mt-5 ">
       {certifications.map((c, idx) => (
         <div key={idx} className="flex justify-between items-start gap-4">
           <div className="text-white flex-1">

@@ -124,6 +124,7 @@ import Image from "next/image";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { useSelector } from "react-redux";
+import EmptyState from "../components/EmptyState";
 
 export default function EducationList({ educations, onAdd, onEdit, onDelete, profileUser }) {
   const [showAll, setShowAll] = useState(false);
@@ -131,12 +132,14 @@ export default function EducationList({ educations, onAdd, onEdit, onDelete, pro
   const isOwner = currentUser?.id === profileUser?.id;
 
   if (!educations?.length) {
-    return    <div className="text-center flex flex-col mt-6 items-center justify-center">
-            <Image src="/Happy Girl.png" alt="certificate" width={147} height={180} /> 
-            <p className="text-gray-100 py-4 text-sm">No education added yet.</p>
-          </div>;
+    return (
+      <EmptyState
+        image="/Happy Girl.png" 
+        alt="certificate" 
+        message="No education added yet." 
+      />
+    );
   }
-
   const displayed = showAll ? educations : educations.slice(0, 2);
 
   return (

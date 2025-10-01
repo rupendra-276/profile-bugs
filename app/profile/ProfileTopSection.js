@@ -270,13 +270,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { RiCameraAiLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../store/userSlice";
+import { updateUser, updateUserById } from "../store/userSlice";
 import { Buttonborder } from "../components/Button";
 import ContactInfoModal from "./ContactInfoModal";
 
 export default function ProfileTopSection({ user }) {
   const dispatch = useDispatch();
   const currentUser = useSelector((s) => s.users.currentUser);
+  // const currentUsernow = useSelector((state) => state.users.currentUser);
+
   const isOwner = currentUser?.id === user?.id;
 
   const [cover, setCover] = useState( user?.cover || "");
@@ -305,10 +307,31 @@ export default function ProfileTopSection({ user }) {
 }
   };
 
-  const handleSaveContactInfo = (updatedInfo) => {
-    if (isOwner) dispatch(updateUser(updatedInfo));
-    setIsModalOpen(false);
-  };
+  // const handleSaveContactInfo = (updatedInfo) => {
+  //   console.log(updatedInfo);
+  //   if (isOwner) dispatch(updateUserById(,updatedInfo));
+  //   // console.log(isOwner);
+  //   setIsModalOpen(false);
+  // };
+
+//   const handleSaveContactInfo = (updatedInfo) => {
+//   if (isOwner) {
+//     dispatch(updateUserById({
+//       id: user.id,          // 👈 make sure this is correct key (id or _id)
+//       updates: updatedInfo,
+//     }));
+//   }
+//   setIsModalOpen(false);
+// };
+
+const handleSaveContactInfo = (updatedInfo) => {
+  if (!isOwner) return;
+  dispatch(updateUserById({ id: currentUser.id, updates: updatedInfo }));
+  setIsModalOpen(false);
+};
+
+
+
 
   return (
     <div className="relative">

@@ -7,6 +7,7 @@ import { users } from "../constents/constents";
 import Link from "next/link";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import EmptyState from "../components/EmptyState";
 
 export default function ProfileActivity() {
   const user = users[0];
@@ -27,6 +28,9 @@ export default function ProfileActivity() {
 
   const percentages = getUserActivityPercentages();
   const filteredPosts = posts.filter((p) => p.activity === activeTab);
+
+
+  
 
   // handlers (like/dislike works in activity)
   const handleLike = (postId) =>
@@ -95,7 +99,15 @@ export default function ProfileActivity() {
             </button>
           ))}
         </div>
-
+       {
+  !filteredPosts?.length && (
+    <EmptyState
+      image="/Happy Girl.png"
+      alt="certificate"
+      message="No certifications added yet."
+    />
+  )
+}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {(showAll ? filteredPosts : filteredPosts.slice(0, 2)).map((post) => {
             if (post.type === "repost") {

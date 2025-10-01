@@ -22,32 +22,31 @@ const userSlice = createSlice({
     setCurrentUser(state, action) {
       state.currentUser = action.payload;
     },
-    // payload: partial user fields to merge into currentUser
-    // updateUser(state, action) {
-    //   if (!state.currentUser) return;
-    //   const updated = { ...state.currentUser, ...action.payload };
-    //   state.currentUser = updated;
-    //   state.users = state.users.map((u) => (u.id === updated.id ? updated : u));
-    // },
-
   updateUser: (state, action) => {
       if (!state.currentUser) return;
+      console.log(action);
       const updated = { ...state.currentUser, ...action.payload };
+      console.log(updated);
       state.currentUser = updated;
+      console.log(state.currentUser);
       state.users = state.users.map((u) =>
         u.id === updated.id ? updated : u
       );
+       console.log(state.users);
     },
-    updateUserById: (state, action) => {
-      const { id, updates } = action.payload;
-      state.users = state.users.map((u) =>
-        u.id === id ? { ...u, ...updates } : u
-      );
-      if (state.currentUser?.id === id) {
-        state.currentUser = { ...state.currentUser, ...updates };
-      }
-    },
-    // payload: { targetId, currentUserId }
+updateUserById: (state, action) => {
+  const { id, updates } = action.payload;
+  console.log(id, updates)
+  state.users = state.users.map((u) =>
+    u.id === id ? { ...u, ...updates } : u
+  );
+  if (state.currentUser?.id === id) {
+    state.currentUser = { ...state.currentUser, ...updates };
+  }
+  console.log("Updated state:", JSON.parse(JSON.stringify(state)));
+},
+
+// payload: { targetId, currentUserId }
     followUser(state, action) {
       const { targetId, currentUserId } = action.payload;
       // increment followers count of target user

@@ -117,6 +117,7 @@ export const FIELD_LIMITS = {
   name: 17,
   headline: 150,
   location: 25,
+  youmaynowabout:50,
   email: 30,
   joined: 15,
   company: 25,

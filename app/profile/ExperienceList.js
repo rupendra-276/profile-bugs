@@ -163,14 +163,22 @@ import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { Calendar1, MapPin, CheckCircle2 } from "lucide-react";
 import { useSelector } from "react-redux";
+import EmptyState from "../components/EmptyState";
 
 export default function ExperienceList({ experiences, onAdd, onEdit, onDelete, profileUser }) {
   const [showAll, setShowAll] = useState(false);
   const currentUser = useSelector((s) => s.users?.currentUser);
   const isOwner = currentUser?.id === profileUser?.id;
 
+  
   if (!experiences?.length) {
-    return <div className="p-4 text-gray-400">No experience added yet.</div>;
+    return (
+      <EmptyState
+        image="/Happy Girl.png" 
+        alt="certificate" 
+        message="No experience added yet." 
+      />
+    );
   }
 
   return (
