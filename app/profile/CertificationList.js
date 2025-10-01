@@ -81,6 +81,7 @@
 
 
 "use client";
+import Image from "next/image";
 import React from "react";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
@@ -90,9 +91,14 @@ export default function CertificationList({ certifications = [], onAdd, onEdit, 
   const currentUser = useSelector((s) => s.users?.currentUser);
   const isOwner = currentUser?.id === profileUser?.id;
 
-  if (!certifications.length) {
-    return <p className="text-gray-100 py-4 text-sm">No certifications added yet.</p>;
-  }
+if (!certifications.length) {
+  return (
+    <div className="text-center flex flex-col mt-6 items-center justify-center">
+      <Image src="/Happy Girl.png" alt="certificate" width={147} height={180} /> 
+      <p className="text-gray-100 py-4 text-sm">No certifications added yet.</p>
+    </div>
+  );
+}
 
   return (
     <div className="space-y-3">

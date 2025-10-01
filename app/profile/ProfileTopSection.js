@@ -296,13 +296,13 @@ export default function ProfileTopSection({ user }) {
     if (!file) return;
 
     const url = URL.createObjectURL(file);
-    if (type === "cover") {
-      setCover(url);
-      if (isOwner) dispatch(updateUser({ cover: url, cover: url }));
-    } else {
-      setAvatar(url);
-      if (isOwner) dispatch(updateUser({ avatar: url, avatar: url }));
-    }
+ if (type === "cover") {
+  setCover(url);
+  if (isOwner) dispatch(updateUser({ cover: url }));
+} else {
+  setAvatar(url);
+  if (isOwner) dispatch(updateUser({ avatar: url }));
+}
   };
 
   const handleSaveContactInfo = (updatedInfo) => {

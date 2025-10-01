@@ -215,6 +215,7 @@ import { HiOutlineDocumentChartBar } from "react-icons/hi2";
 import Modal from "../components/Modal";
 import ProfileActivity from "./ProfileActivity";
 import { useSelector } from "react-redux";
+import Image from "next/image";
 
 /**
  * @param {object} props
@@ -394,7 +395,16 @@ const DesignerProfile = ({ user }) => {
             {about ? (
               <p className="text-white whitespace-pre-wrap break-all">{about}</p>
             ) : (
-              <p className="text-gray-200">Add an overview...</p>
+              <div className="text-center flex flex-col items-center justify-center">
+              {/* <p className="text-gray-200">Add an overview...</p> */}
+              <Image src="/Happy Girl.png" alt={user.name} width={147} height={180} />
+              {!isOwner && <p className="text-gray-300 text-sm mt-1">This user has not added an overview yet.</p>}
+
+              <div>
+              {/* <Image src="/Happy_Girl-removebg-preview.png" alt={user.name} width={147} height={149} /> */}
+                
+              </div>
+              </div>
             )}
           </div>
           <ProfileActivity />

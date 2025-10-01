@@ -30,18 +30,22 @@ const userSlice = createSlice({
     //   state.users = state.users.map((u) => (u.id === updated.id ? updated : u));
     // },
 
-    updateUser: (state, action) => {
-      // ✅ Merge updates instead of replacing whole user
-      state.currentUser = {
-        ...state.currentUser,
-        ...action.payload,
-      };
+  updateUser: (state, action) => {
+      if (!state.currentUser) return;
+      const updated = { ...state.currentUser, ...action.payload };
+      state.currentUser = updated;
+      state.users = state.users.map((u) =>
+        u.id === updated.id ? updated : u
+      );
     },
-    // payload: { id, data }
-    updateUserById(state, action) {
-      const { id, data } = action.payload;
-      state.users = state.users.map((u) => (u.id === id ? { ...u, ...data } : u));
-      if (state.currentUser?.id === id) state.currentUser = { ...state.currentUser, ...data };
+    updateUserById: (state, action) => {
+      const { id, updates } = action.payload;
+      state.users = state.users.map((u) =>
+        u.id === id ? { ...u, ...updates } : u
+      );
+      if (state.currentUser?.id === id) {
+        state.currentUser = { ...state.currentUser, ...updates };
+      }
     },
     // payload: { targetId, currentUserId }
     followUser(state, action) {

@@ -131,7 +131,10 @@ export default function EducationList({ educations, onAdd, onEdit, onDelete, pro
   const isOwner = currentUser?.id === profileUser?.id;
 
   if (!educations?.length) {
-    return <div className="py-4 text-gray-400">No education added yet.</div>;
+    return    <div className="text-center flex flex-col mt-6 items-center justify-center">
+            <Image src="/Happy Girl.png" alt="certificate" width={147} height={180} /> 
+            <p className="text-gray-100 py-4 text-sm">No education added yet.</p>
+          </div>;
   }
 
   const displayed = showAll ? educations : educations.slice(0, 2);

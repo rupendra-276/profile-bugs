@@ -76,7 +76,7 @@ export default function UserProfilePage({ params }) {
 
   return (
     <div className="bg-[#070C11] min-h-screen text-white p-4 sm:p-6 lg:p-8">
-      <div className="flex flex-1 px-10 flex-col md:flex-row transition-all gap-8 duration-300">
+      <div className="flex flex-1 px-10 flex-col md:flex-row transition-all gap-14 duration-300">
         
         {/* Left / Main Section */}
         <section className="w-full lg:w-2/3 space-y-6">
@@ -85,7 +85,7 @@ export default function UserProfilePage({ params }) {
         </section>
 
         {/* Right / Sidebar */}
-        <aside className="w-full lg:w-1/3 flex flex-col gap-4">
+        <aside className="w-full lg:max-w-[280px] flex flex-col gap-4">
           {isOwner && <ProfileAnalytics />}
           <PeopleYouMayKnow users={users} currentUserId={user.id} limit={4} />
           <JoinCommunities />

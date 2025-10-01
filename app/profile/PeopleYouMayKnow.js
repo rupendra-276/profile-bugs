@@ -85,7 +85,7 @@ function ProfileAvatar({ name, image }) {
 
   if (!image || imgError) {
     return (
-      <div className="w-[60px] h-[60px] flex items-center justify-center bg-gray-200 text-gray-600 font-semibold rounded-full">
+      <div className="w-[60px] h-[60px] flex items-center justify-center bg-gray-200 text-gray-600 font-semibold rounded-[20px]">
         {name ? name.charAt(0).toUpperCase() : "?"}
       </div>
     );
@@ -97,7 +97,7 @@ function ProfileAvatar({ name, image }) {
       alt={name}
       width={60}
       height={60}
-      className="rounded-full w-[60px] h-[60px] object-cover border"
+      className="rounded-[20px] w-[60px] h-[60px] object-cover border"
       onError={() => setImgError(true)}
     />
   );
@@ -161,12 +161,12 @@ function ProfileAvatar({ name, image }) {
 
 
 
-
+import { TruncateText } from "../helper/truncateText";
 export default function PeopleYouMayKnow({ users = [], currentUserId = null, limit = 4 }) {
 
   const suggestions = (users && users.length ? users : []).filter((u) => u.id !== currentUserId);
   const list = suggestions.slice(0, limit);
-  const [showFullContent, setShowFullContent] = useState(false);  
+  // const [showFullContent, setShowFullContent] = useState(false);  
 
 
   return (
@@ -181,7 +181,7 @@ export default function PeopleYouMayKnow({ users = [], currentUserId = null, lim
                 <ProfileAvatar name={person.name} image={person.avatar || person.avatar} />
                 <div>
                   <h4 className="font-semibold text-white hover:underline">{person.name}</h4>
-                  <p className="text-sm text-gray-100">{person.headline || ""}</p>
+                  <p className="text-sm text-gray-100">{TruncateText(person.headline || "", 40)}</p>
                 </div>
               </Link>
             </div>

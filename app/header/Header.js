@@ -467,7 +467,7 @@ export default function Header({ isSidebarOpen, toggleSidebar }) {
               className={`transition-all duration-300 ${scrolled ? "w-8 h-8" : "w-9 h-9"}`}
             />
             {/* optional text hidden on very small screens */}
-            <span className="text-white font-semibold hidden sm:inline">Spreads</span>
+            <span className="text-white font-semibold hidden sm:inline">Spreadnext</span>
           </Link>
         </div>
 

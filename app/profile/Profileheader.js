@@ -458,6 +458,8 @@ import ProfileTopSection from "./ProfileTopSection";
 import { Buttonborder } from "../components/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { followUser, unfollowUser } from "../store/userSlice";
+import { TruncateText } from "../helper/truncateText";
+import { FIELD_LIMITS } from "../constents/constents";
 
 export default function ProfileHeader({ user }) {
   const dispatch = useDispatch();
@@ -512,7 +514,8 @@ export default function ProfileHeader({ user }) {
       <div className="mt-8 flex flex-col md:flex-row gap-10">
         <div className="mt-2 w-full md:w-[70%]">
           <h2 className="text-[20px] sm:text-2xl font-semibold my-1 text-[#f9f9f9] flex gap-2 items-center">
-            {user.name}
+            {TruncateText(user.name, FIELD_LIMITS.name)}
+
             {user.verified && <MdVerifiedUser className="text-blue-500" />}
           </h2>
 

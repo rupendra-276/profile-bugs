@@ -113,6 +113,17 @@ export const footerPolicies = [
 ];
 
 
+export const FIELD_LIMITS = {
+  name: 17,
+  headline: 150,
+  location: 25,
+  email: 30,
+  joined: 15,
+  company: 25,
+};
+
+
+
 
 // utils/dummyUsers.js
 export const users = [
@@ -120,7 +131,7 @@ export const users = [
     id: "u12345",
     username: "rupendra",
     name: "Rupendra Vishwakarma",
-    headline: "Full Stack Developer | AI + Frontend Enthusiast",
+    headline: "Full Stack Developer | AI + Frontend EnthusiastFull Stack Developer | AI + Frontend EnthusiastFull Stack Developer | AI + Frontend EnthusiastFull Stack Developer | AI + Frontend EnthusiastFull Stack Developer | AI + Frontend Enthusiast",
     location: "India",
     email: "rupendravishwarkam@gmail.com",
     phone: ["9876543210"],
@@ -371,7 +382,7 @@ export const users = [
     email: "javed.akhtar@gmail.com",
     phone: ["9876543212"],
     joined: "21 June 2025",
-    about: "Passionate about AI and full stack development.",
+    about: "",
     avatar: "https://randomuser.me/api/portraits/men/65.jpg",
     cover:
       "https://images.unsplash.com/photo-1503264116251-35a269479413",
