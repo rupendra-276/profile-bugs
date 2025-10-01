@@ -96,7 +96,7 @@ export default function ProfileActivity() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {(showAll ? filteredPosts : filteredPosts.slice(0, 2)).map((post) => {
             if (post.type === "repost") {
               const original = posts.find((x) => x.id === post.originalId);

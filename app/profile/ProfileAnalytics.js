@@ -26,7 +26,7 @@
 //     education: "B.Tech",
 //     experience: "2 years",
 //     resume: "",
-//     profilePhoto: "https://dummy.com/photo.png",
+//     avatar: "https://dummy.com/photo.png",
 //     skills: ["React", "Next.js"],
 //     bio: "",
 //   };
@@ -41,7 +41,7 @@
 //       "education",
 //       "experience",
 //       "resume",
-//       "profilePhoto",
+//       "avatar",
 //       "skills",
 //       "bio",
 //     ];
@@ -173,7 +173,7 @@ export default function ProfileAnalytics() {
     education: "B.Tech",
     experience: "2 years",
     resume: "",
-    profilePhoto: "https://dummy.com/photo.png",
+    avatar: "https://dummy.com/photo.png",
     skills: ["React", "Next.js"],
     bio: ""
   };
@@ -188,7 +188,7 @@ export default function ProfileAnalytics() {
       "education",
       "experience",
       "resume",
-      "profilePhoto",
+      "avatar",
       "skills",
       "bio",
     ];

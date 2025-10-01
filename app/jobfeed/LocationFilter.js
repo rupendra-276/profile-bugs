@@ -67,7 +67,7 @@
 
 "use client";
 import React, { useMemo, useState } from "react";
-import InputForm from "../components/InputWithCount";
+import {InputWithCount} from "../components/FormInput";
 
 export default function LocationFilter({ value, onChange, suggestions = [] }) {
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -104,7 +104,7 @@ export default function LocationFilter({ value, onChange, suggestions = [] }) {
 
   return (
     <div className="relative w-full">
-      <InputForm
+      <InputWithCount
         label="Location"
         value={value}
         onChange={handleChange}

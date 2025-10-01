@@ -324,43 +324,281 @@
 // export default Header;
 
 
+// // components/Header.jsx
+// "use client";
+// import Link from "next/link";
+// import Image from "next/image";
+// import { IoSearchOutline } from "react-icons/io5";
+// import { CgMenuGridO, CgMenuRound } from "react-icons/cg";
+// import { GoSidebarCollapse } from "react-icons/go";
+// import SearchBar from './SearchBox';
+// import { CgMenuBoxed } from "react-icons/cg";
+
+// export default function Header({ isSidebarOpen, toggleSidebar }) {
+//   // adjust search width depending on sidebar open to appear fluid
+//   const searchWidthClass = isSidebarOpen ? "w-64 lg:w-96" : "w-80 lg:w-[520px]";
+
+//   return (
+//     <header className="w-full fixed top-0 left-0 right-0 z-50 px-4 py-2 bg-[#10151B] border-b border-gray-400 flex items-center justify-between">
+//       {/* left: collapse + logo */}
+//       <div className="flex items-center gap-3  sm:ms-6">
+//         <button onClick={toggleSidebar} className="p-1 rounded-md  shadow" aria-label="Toggle sidebar">
+//           <CgMenuBoxed className="w-7 h-7 text-gray-300" />
+//         </button>
+
+//         <Link href="/" className="flex items-center gap-2">
+//           <Image src="/spreads.svg" alt="Logo" width={36} height={36} />
+//           {/* <span className="text-white font-semibold hidden sm:block">Spreads</span> */}
+//         </Link>
+//       </div>
+
+//       {/* center: search */}
+    
+//        <div className="relative flex gap-5 items-center">
+          
+//             <SearchBar />
+//             <button>
+//               <CgMenuGridO className="text-gray-300 text-3xl font-light hover:cursor-pointer" />
+//             </button>
+//           </div>
+//     </header>
+//   );
+// }
+
+
+
 // components/Header.jsx
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { IoSearchOutline } from "react-icons/io5";
-import { CgMenuGridO, CgMenuRound } from "react-icons/cg";
-import { GoSidebarCollapse } from "react-icons/go";
-import SearchBar from './SearchBox';
-import { CgMenuBoxed } from "react-icons/cg";
+import { useState, useEffect } from "react";
+import { Menu, X, User, LogOut } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
+import { logoutUser } from "../store/authSlice"; // path adjust if needed
+import SearchBar from "../header/SearchBox"; // adjust path to your SearchBox
+import LinkButton, { NavLinkButton } from "../button/Button";
+import { StaggeredContainer, AnimatedWrapper } from "../animation/animation";
+import { CgMenuGridO } from "react-icons/cg";
+
+const navLinks = [
+  { label: "About", href: "/about" },
+  { label: "Community", href: "/community" },
+  { label: "Companies", href: "/companies" },
+  { label: "Jobs", href: "/jobs" },
+];
 
 export default function Header({ isSidebarOpen, toggleSidebar }) {
-  // adjust search width depending on sidebar open to appear fluid
-  const searchWidthClass = isSidebarOpen ? "w-64 lg:w-96" : "w-80 lg:w-[520px]";
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth || { user: null });
+
+  // scroll effect
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // prevent body scroll when mobile menu open
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "unset";
+    return () => (document.body.style.overflow = "unset");
+  }, [mobileMenuOpen]);
+
+  // close mobile menu on resize
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768 && mobileMenuOpen) setMobileMenuOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [mobileMenuOpen]);
+
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    router.push("/signin");
+    setMobileMenuOpen(false);
+  };
+
+  const handleNavClick = (href, e) => {
+    if ((user || localStorage.getItem("token")) && (href === "/signin" || href === "/signup")) {
+      e?.preventDefault();
+      router.push("/jobfeed");
+      return false;
+    }
+    return true;
+  };
 
   return (
-    <header className="w-full fixed top-0 left-0 right-0 z-50 px-4 py-2 bg-[#10151B] border-b border-gray-400 flex items-center justify-between">
-      {/* left: collapse + logo */}
-      <div className="flex items-center gap-3  sm:ms-6">
-        <button onClick={toggleSidebar} className="p-1 rounded-md  shadow" aria-label="Toggle sidebar">
-          <CgMenuBoxed className="w-7 h-7 text-gray-300" />
-        </button>
+    <header
+      // className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out px-3 sm:px-4 lg:px-6 xl:px-8 ${
+      //   scrolled
+      //     ? "py-1 sm:py-1.5 bg-[#020718] backdrop-blur-lg shadow-sm border-b border-gray-200/50"
+      //     : "sm:py-2 bg-[#020718] border-b-2 border-gray-200"
+      // }`}
+         className={`w-full fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out px-3 sm:px-4 lg:px-6 xl:px-8 py-1 sm:py-1.5 bg-[#020718] backdrop-blur-lg shadow-sm border-b border-gray-200/50`}
+    >
+      <div className={`  ${user ? "max-w-8xl" : "max-w-7xl"} mx-auto flex items-center justify-between gap-4`}>
+        <div className="flex items-center gap-3">
+          {/* Sidebar toggle: only show if user is logged in */}
+          {user ? (
+            <button
+              onClick={toggleSidebar}
+              aria-label="Toggle sidebar"
+              className="p-1 rounded-md shadow bg-transparent text-gray-200 hover:bg-gray-800  hover:cursor-pointer transition"
+            >
+              {/* small menu icon */}
+              <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 12h18M3 6h18M3 18h18" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          ) : null}
 
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/spreads.svg" alt="Logo" width={36} height={36} />
-          {/* <span className="text-white font-semibold hidden sm:block">Spreads</span> */}
-        </Link>
-      </div>
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/spreads.svg"
+              alt="Logo"
+              width={scrolled ? 28 : 36}
+              height={scrolled ? 28 : 36}
+              className={`transition-all duration-300 ${scrolled ? "w-8 h-8" : "w-9 h-9"}`}
+            />
+            {/* optional text hidden on very small screens */}
+            <span className="text-white font-semibold hidden sm:inline">Spreads</span>
+          </Link>
+        </div>
 
-      {/* center: search */}
-    
-       <div className="relative flex gap-5 items-center">
-          
+        {/* center / responsive: navigation links (desktop) + Search */}
+        <div className="hidden md:flex items-center flex-1 justify-center gap-6">
+          <nav className="flex items-center space-x-4 lg:space-x-6 xl:space-x-8">
+            {navLinks.map(({ label, href }, idx) => (
+              <Link
+                key={idx}
+                href={href}
+                onClick={(e) => handleNavClick(href, e)}
+                className="group relative transition-all duration-300 transform hover:-translate-y-0.5"
+              >
+                <span
+                  className={`relative cursor-pointer font-[Jost] font-medium text-sm lg:text-base transition-all duration-300 whitespace-nowrap ${
+                    pathname === href ? "text-[#edebff] font-semibold" : "text-white hover:text-[#e1d7d7]"
+                  }`}
+                >
+                  {label}
+                  {pathname === href && (
+                    <span className="absolute left-0 -bottom-4 w-full h-0.5 bg-blue-800 rounded-full "></span>
+                  )}
+                </span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* Search bar occupies flexible width; keeps responsiveness */}
+         
+        </div>
+
+        {/* right side actions (desktop) */}
+        <div className="flex items-center gap-3">
+          {user ? (
+             <div className="flex flex-1">
             <SearchBar />
             <button>
               <CgMenuGridO className="text-gray-300 text-3xl font-light hover:cursor-pointer" />
             </button>
           </div>
+          ) : (
+            <div className="hidden md:flex items-center space-x-2 lg:space-x-3 xl:space-x-4 flex-shrink-0">
+              <NavLinkButton href="/signin" text="Login" onClick={(e) => handleNavClick("/signin", e)} />
+              <LinkButton href="/signup" name="Sign Up" linkclassname="!py-1.5" showIcon={false} onClick={(e) => handleNavClick("/signup", e)} />
+            </div>
+          )}
+        </div>
+
+        {/* mobile menu button */}
+        {
+          !user && (   <button
+          className={`md:hidden p-2 rounded-lg transition-all duration-300 flex-shrink-0 ${
+            mobileMenuOpen ? "bg-[#1200B1] text-white" : "text-white hover:cursor-pointer"
+          }`}
+          onClick={() => setMobileMenuOpen((s) => !s)}
+          aria-label="Toggle mobile menu"
+        >
+          <div className="relative w-5 h-5 sm:w-6 sm:h-6">
+            <Menu size={20} className={`absolute transition-all duration-300 ${mobileMenuOpen ? "opacity-0 rotate-90" : "opacity-100 rotate-0"}`} />
+            <X size={20} className={`absolute transition-all duration-300 ${mobileMenuOpen ? "opacity-100 rotate-0" : "opacity-0 -rotate-90"}`} />
+          </div>
+        </button>)
+        }
+     
+
+
+      </div>
+
+      {/* Mobile Menu Drawer */}
+      <div
+        className={`md:hidden fixed left-0 top-0 w-full h-screen bg-white z-40 transition-all duration-500 ease-out ${
+          mobileMenuOpen ? "opacity-100 translate-x-0" : "opacity-0 translate-x-full pointer-events-none"
+        }`}
+      >
+        <div className="flex justify-between items-center p-4 sm:p-5 border-b border-gray-200">
+          <Link href="/" onClick={() => setMobileMenuOpen(false)}>
+            <Image src="/Finalloo.svg" alt="Logo" width={40} height={40} className="w-10 h-10 sm:w-11 sm:h-11" />
+          </Link>
+          <button onClick={() => setMobileMenuOpen(false)} aria-label="Close mobile menu" className="p-2 rounded-lg text-gray-700 hover:bg-gray-100">
+            <X size={24} className="w-5 h-5 sm:w-6 sm:h-6" />
+          </button>
+        </div>
+
+        <div className="p-4 sm:p-5 overflow-y-auto h-full pb-20">
+          <StaggeredContainer className="flex flex-col space-y-1 sm:space-y-3">
+            {navLinks.map(({ label, href }, index) => (
+              <AnimatedWrapper key={index} className="transform transition-all duration-300" delay={index * 0.06} direction="right">
+                <Link
+                  href={href}
+                  onClick={(e) => {
+                    handleNavClick(href, e);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="group block py-2 px-4 rounded-lg hover:bg-blue-50"
+                >
+                  <span className={`text-lg font-medium ${pathname === href ? "text-[#1200B1]" : "text-gray-700"}`}>{label}</span>
+                </Link>
+              </AnimatedWrapper>
+            ))}
+
+            <div className="flex flex-col space-y-3 pt-6 border-t border-gray-200">
+              <AnimatedWrapper delay={0.6}>
+                {user ? (
+                  <>
+                    <Link href="/profile" onClick={() => setMobileMenuOpen(false)} className="text-center py-3 px-6 rounded-lg border-2 border-[#1200B1] text-[#1200B1] font-medium hover:bg-[#1200B1] hover:text-white">
+                      Profile
+                    </Link>
+                    <button onClick={handleLogout} className="text-center py-3 px-6 rounded-lg border-2 border-[#1200B1] text-[#1200B1] font-medium hover:bg-[#1200B1] hover:text-white">
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  < div className="flex flex-col items-start space-y-3">
+                    <LinkButton showIcon={false} href="/signin" name="Login" onClick={(e) => { handleNavClick("/signin", e); setMobileMenuOpen(false); }} />
+                    <LinkButton href="/signup" name="Sign Up" showIcon={false} onClick={(e) => { handleNavClick("/signup", e); setMobileMenuOpen(false); }} />
+                  </div>
+                )}
+              </AnimatedWrapper>
+            </div>
+          </StaggeredContainer>
+        </div>
+      </div>
+
+      {/* backdrop when mobile menu open */}
+      {mobileMenuOpen && <div className="md:hidden fixed inset-0 bg-black/20 z-30 backdrop-blur-sm" onClick={() => setMobileMenuOpen(false)} />}
+
+      <style jsx>{`
+        @media (max-width: 720px) {
+          .max-w-7xl { padding-left: 0.75rem; padding-right: 0.75rem; }
+        }
+      `}</style>
     </header>
   );
 }

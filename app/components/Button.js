@@ -22,20 +22,21 @@ export default function Button({
   );
 }
 
+
 export function Buttonborder({
   name,
   onClick,
-  classNameborder,
+  classNameborder = "",
   icon: Icon,
   ...props
 }) {
   return (
-    <button onClick={onClick} {...props}>
-      <span
-        className={` text-[12px] flex gap-1 items-center  px-3 py-2.5 rounded-full bg-[#0013E3] font-semibold text-white ${classNameborder}`}
-      >
-       {Icon && <Icon className="w-5 h-5" />} {name}  
-      </span>
+    <button
+      onClick={onClick}
+      {...props}
+      className={`text-[12px] flex justify-center items-center gap-1 px-3 py-2.5 rounded-full bg-[#0013E3] font-semibold text-white hover:cursor-pointer  ${classNameborder}`}
+    >
+      {Icon && <Icon className="w-5 h-5" />} {name}
     </button>
   );
 }

@@ -42,7 +42,7 @@ const handleChange = (value) => {
   return (
     <div className="relative flex gap-5 items-center">
       {/* Search Box */}
-      <div className="relative w-[280px] sm:w-[320px] lg:w-[349px]">
+      <div className="relative w-[280px] sm:w-[320px]">
        <InputWithCount
         value={query}
         onChange={handleChange}   // अब value आएगा, event नहीं
@@ -50,9 +50,9 @@ const handleChange = (value) => {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setTimeout(() => setIsFocused(false), 100)}
         placeholder="Search"
-        className="!w-full px-3 ps-10 bg-[#07061c] text-gray-200 py-2 border border-gray-200 rounded-full focus:outline-none focus:border"
+        className="!w-full px-3 ps-10 bg-[#07061c] text-gray-200 !py-2.5 border border-gray-200 rounded-full focus:outline-none focus:border"
       />
-        <IoSearchOutline className="absolute top-4 left-3 text-gray-300 text-xl" />
+        <IoSearchOutline className="absolute top-3 left-3 text-gray-300 text-xl" />
 
         {/* Suggestions Dropdown */}
         {isFocused && filtered.length > 0 && (
@@ -61,7 +61,7 @@ const handleChange = (value) => {
               <Link
                 key={item.id}
                 href={`profile/${item.id}`}
-                className="flex items-center gap-3 w-full px-4 py-2 hover:bg-gray-800 text-left"
+                className="flex items-center gap-3 w-full px-4 py-1.5 hover:bg-gray-800 text-left"
               >
                 <Image
                   src={item.image || "/default-user.png"}

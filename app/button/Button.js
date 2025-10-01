@@ -15,7 +15,7 @@ export default function LinkButton({
   return (
     <Link
       href={href}
-      className={`bg-blue-600 text-[15px] hover:bg-blue-700 text-white font-semibold 
+      className={`bg-[#0013E3] text-[15px] hover:bg-blue-700 text-white font-semibold 
                   py-1.5 px-4 md:py-2.5 md:px-5 rounded-full transition-colors duration-200 
                   ${centerText ? "flex justify-center items-center" : "inline-flex items-center"}  hover:cursor-pointer gap-2 ${linkclassname}`}
     >

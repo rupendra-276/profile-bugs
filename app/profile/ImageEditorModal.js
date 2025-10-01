@@ -131,7 +131,7 @@ export default function ImageEditorModal({ show, onClose, image, onSave, mode = 
           <ImageEditor ref={editorRef} initialImage={image} mode={mode} activeStep={step} />
         </div>
 
-        <div className="flex   z-50 justify-end gap-3">
+        <div className="flex bg-[#10151B] sticky bottom-0 z-50 justify-end gap-3">
           <Button type="button" onClick={handleBack} buttonclass="bg-gray-600 text-white">
             {step === 0 ? "Cancel" : "Back"}
           </Button>

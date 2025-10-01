@@ -91,7 +91,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
 
   return (
     <aside
-      className={`transition-all duration-300 border-r h-screen border-gray-400 bg-[#10151B] text-white flex flex-col justify-between
+      className={`transition-all sticky top-10  duration-300 border-r h-screen border-gray-400 bg-[#10151B] text-white flex flex-col justify-between
         ${isSidebarOpen ? "w-56" : "w-16"}`}
       aria-expanded={isSidebarOpen}
     >
@@ -102,12 +102,12 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
           <Link
             key={idx}
             href={item.link}
-            className={`flex items-center gap-3  px-4 py-1.5 text-sm text-gray-300 transition ${
-              !isSidebarOpen && "justify-center"
+            className={`flex items-center gap-3  px-4 py-2 my-2 text-sm text-gray-300 transition hover:cursor-pointer ${
+              !isSidebarOpen && "justify-center "
             }`}
           >
             {item.icon}
-            {isSidebarOpen && <span className="truncate">{item.name}</span>}
+            {isSidebarOpen && <span className="truncate hidden sm:block">{item.name}</span>}
           </Link>
         ))}
 
@@ -118,7 +118,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
           }`}
         >
           <CiCirclePlus className="w-7 h-8" />
-          {isSidebarOpen && <span className="text-[16px]">Create spread</span>}
+          {isSidebarOpen && <span className="hidden sm:block text-[16px]">Create spread</span>}
         </button>
         {/* toggle more items */}
         {/* <button
@@ -160,7 +160,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
           height={36}
           className="w-[36px] h-[36px] rounded-full object-cover"
         />
-        {isSidebarOpen && <span className="text-sm">Your Name</span>}
+        {isSidebarOpen && <span className="hidden sm:block text-sm">Your Name</span>}
       </div>
     </aside>
   );

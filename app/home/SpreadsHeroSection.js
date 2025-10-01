@@ -63,8 +63,9 @@ import LinkButton from "../button/Button";
 
 export default function SpreadsHeroSection() {
   return (
-    <section className="bg-[#f9fafc] py-16 px-4 md:px-8 lg:px-24">
-      <div className="max-w-7xl mx-auto">
+    <section className="bg-[#ffffff]">
+      <div  className=" py-16 px-4 md:px-8 lg:px-24">
+     <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
           <div className="space-y-4">
@@ -97,6 +98,8 @@ export default function SpreadsHeroSection() {
           </div>
         </div>
       </div>
+      </div>
+ 
     </section>
   );
 }

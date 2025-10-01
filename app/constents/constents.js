@@ -118,6 +118,7 @@ export const footerPolicies = [
 export const users = [
   {
     id: "u12345",
+    username: "rupendra",
     name: "Rupendra Vishwakarma",
     headline: "Full Stack Developer | AI + Frontend Enthusiast",
     location: "India",
@@ -126,8 +127,8 @@ export const users = [
     joined: "21 June 2025",
     about:
       "Passionate about building AI-powered frontend experiences. MERN + Next.js + LangChain.",
-    profilePhoto: "https://randomuser.me/api/portraits/men/32.jpg",
-    coverPhoto:
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+    cover:
       "https://images.unsplash.com/photo-1503264116251-35a269479413",
     socialLinks: {
       linkedin: "https://linkedin.com/in/rupendra",
@@ -300,6 +301,7 @@ export const users = [
   {
     id: "u12346",
     name: "Amana Vishwakarma",
+    username: "aman2",
     headline: "Full Stack Developer | AI + Frontend Enthusiast",
     location: "India",
     email: "amana.vishwakarma@gmail.com",
@@ -307,8 +309,8 @@ export const users = [
     joined: "21 June 2025",
     about:
       "Passionate about building AI-powered frontend experiences. MERN + Next.js + LangChain.",
-    profilePhoto: "https://randomuser.me/api/portraits/women/44.jpg",
-    coverPhoto:
+    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+    cover:
       "https://images.unsplash.com/photo-1503264116251-35a269479413",
     socialLinks: {
       linkedin: "https://linkedin.com/in/amana",
@@ -362,15 +364,16 @@ export const users = [
   },
   {
     id: "u12347",
-    name: "Javed Akhtar",
+    username: "javed23",
+    name: "Javed Akhtar", 
     headline: "Full Stack Developer | AI + Frontend Enthusiast",
     location: "India",
     email: "javed.akhtar@gmail.com",
     phone: ["9876543212"],
     joined: "21 June 2025",
     about: "Passionate about AI and full stack development.",
-    profilePhoto: "https://randomuser.me/api/portraits/men/65.jpg",
-    coverPhoto:
+    avatar: "https://randomuser.me/api/portraits/men/65.jpg",
+    cover:
       "https://images.unsplash.com/photo-1503264116251-35a269479413",
     socialLinks: {},
     followers: 1020,

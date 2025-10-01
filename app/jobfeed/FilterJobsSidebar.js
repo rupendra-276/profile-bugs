@@ -198,7 +198,7 @@ import { Filter } from "lucide-react";
 import { MdFilterAltOff } from "react-icons/md";
 
 import SelectField from "../components/FormSelect";
-import InputForm from "../components/InputWithCount";
+import {InputWithCount} from "../components/FormInput";
 import CheckboxField from "../components/CheckboxField";
 import LocationFilter from "./LocationFilter";
 
@@ -392,7 +392,7 @@ export default function FilterSidebar({ onApplyFilters, onClearFilters }) {
         onChange={handleChange("industry")}
       />
       {filters.industry === "other" && (
-        <InputForm
+        <InputWithCount
           placeholder="Specify other industry..."
           value={filters.otherIndustry}
           onChange={handleChange("otherIndustry")}
