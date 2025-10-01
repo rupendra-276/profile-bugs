@@ -451,497 +451,14 @@
 // // }
 
 
-// "use client";
-// import React, { useEffect, useRef, useState } from "react";
-// import { RiCameraAiLine } from "react-icons/ri";
-// import { Plus } from "lucide-react";
-// import { InputWithCount } from "../components/FormInput";
-// import Button from "../components/Button";
-// import Modal from "../components/Modal";
-// import ImageEditorModal from "./ImageEditorModal";
-// import { RxCross1 } from "react-icons/rx";
-
-// export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
-//   const [formData, setFormData] = useState({
-//     name: "",
-//     headline: "",
-//     location: "",
-//     email: "",
-//     phoneNumbers: [],
-//     socialLinks: { github: "", website: "" },
-//     cover: "",
-//     avatar: "",
-//   });
-
-//   const [errors, setErrors] = useState({
-//     name: "",
-//     location: "",
-//     phoneNumbers: [],
-//     website: "",
-//     github: "",
-//     cover: "",
-//     avatar: "",
-//   });
-
-//   const coverInputRef = useRef(null);
-//   const avatarInputRef = useRef(null);
-
-//   // editor state
-//   const [editorOpen, setEditorOpen] = useState(false);
-//   const [editorMode, setEditorMode] = useState("cover"); // "cover" | "avatar"
-//   const [editorImage, setEditorImage] = useState(null);
-
-//   useEffect(() => {
-//     if (user) {
-//       setFormData({
-//         name: user?.name || "",
-//         headline: user?.headline || "",
-//         location: user?.location || "",
-//         email: user?.email || "",
-//         phoneNumbers: user?.phone || [],
-//         socialLinks: {
-//           github: user?.socialLinks?.github || "",
-//           website: user?.socialLinks?.website || "",
-//         },
-//         cover: user?.cover || "",
-//         avatar: user?.avatar || "",
-//       });
-//       setErrors((prev) => ({
-//         ...prev,
-//         phoneNumbers: (user?.phone || []).map(() => ""),
-//       }));
-//     }
-//   }, [user]);
-
-//   const handleChange = (key, value) => {
-//     setFormData((prev) => ({ ...prev, [key]: value }));
-//     if (key === "name" && value.trim()) setErrors((p) => ({ ...p, name: "" }));
-//     if (key === "location" && value.trim())
-//       setErrors((p) => ({ ...p, location: "" }));
-//     if (key === "cover" && value === "") setErrors((p) => ({ ...p, cover: "" }));
-//     if (key === "avatar" && value === "") setErrors((p) => ({ ...p, avatar: "" }));
-//   };
-
-//   // Phone handling
-//   const handlePhoneChange = (index, value) => {
-//     const updated = [...formData.phoneNumbers];
-//     updated[index] = value;
-//     setFormData((prev) => ({ ...prev, phoneNumbers: updated }));
-
-//     const phoneErrs = [...(errors.phoneNumbers || [])];
-//     phoneErrs[index] = value ? (validatePhone(value) ? "" : "Invalid phone number") : "";
-//     setErrors((prev) => ({ ...prev, phoneNumbers: phoneErrs }));
-//   };
-
-//   const addPhoneNumber = () => {
-//     if (formData.phoneNumbers.length >= 2) return;
-//     setFormData((prev) => ({
-//       ...prev,
-//       phoneNumbers: [...prev.phoneNumbers, ""],
-//     }));
-//     setErrors((prev) => ({
-//       ...prev,
-//       phoneNumbers: [...(prev.phoneNumbers || []), ""],
-//     }));
-//   };
-
-//   const handleSocialChange = (platform, value) =>
-//     setFormData((prev) => ({
-//       ...prev,
-//       socialLinks: { ...prev.socialLinks, [platform]: value },
-//     }));
-
-//   // file upload → editor
-//   const handleFileChange = (e, type) => {
-//     const file = e.target.files?.[0];
-//     if (!file) return;
-
-//     if (!file.type.startsWith("image/")) {
-//       setErrors((prev) => ({ ...prev, [type]: "Please upload a valid image file." }));
-//       return;
-//     }
-//     if (file.size > 5 * 1024 * 1024) {
-//       setErrors((prev) => ({ ...prev, [type]: "File too large (max 5MB)." }));
-//       return;
-//     }
-//     setErrors((prev) => ({ ...prev, [type]: "" }));
-
-//     const reader = new FileReader();
-//     reader.onload = () => {
-//       setEditorMode(type);
-//       setEditorImage(reader.result);
-//       setEditorOpen(true);
-//     };
-//     reader.readAsDataURL(file);
-//   };
-
-//   const handleEditorSave = (result) => {
-//     if (!result || !result.url) {
-//       setEditorOpen(false);
-//       setEditorImage(null);
-//       return;
-//     }
-//     setFormData((prev) => ({ ...prev, [editorMode]: result.url }));
-//     setEditorOpen(false);
-//     setEditorImage(null);
-//     setErrors((prev) => ({ ...prev, [editorMode]: "" }));
-//   };
-
-//   const handleEditorCancel = () => {
-//     setEditorOpen(false);
-//     setEditorImage(null);
-//   };
-
-//   // New: remove cover
-//   const removeCover = () => {
-//     setFormData((prev) => ({ ...prev, cover: "" }));
-//     setErrors((prev) => ({ ...prev, cover: "" }));
-//   };
-// const removeavatar = () => {
-//     setFormData((prev) => ({ ...prev, avatar: "" }));
-//     setErrors((prev) => ({ ...prev, avatar: "" }));
-//   };
-
-  
-//   // Validation helpers
-//   function validatePhone(value) {
-//     if (!value) return false; // caller should handle empty as "no input"
-//     // strip common separators but keep leading +
-//     const trimmed = value.trim();
-//     // if starts with + => international
-//     if (trimmed.startsWith("+")) {
-//       const digits = trimmed.replace(/\D/g, "");
-//       return digits.length >= 10 && digits.length <= 15;
-//     } else {
-//       // allow formats like (123) 456-7890 etc but count digits
-//       const digits = trimmed.replace(/\D/g, "");
-//       // Accept exactly 10 digits for local numbers only
-//       return digits.length === 10;
-//     }
-//   }
-
-//   function isValidWebsite(url) {
-//     if (!url) return true;
-//     const site = url.trim();
-//     const urlPattern = /^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
-//     return urlPattern.test(site);
-//   }
-
-//  function isValidGithub(input) {
-//   if (!input) return false;
-//   const s = input.trim();
-
-//   // ✅ must start with https://github.com/, http://github.com/, or github.com/
-//   const urlPattern = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+$/;
-
-//   return urlPattern.test(s);
-// }
-
-//   const validateAll = () => {
-//     const newErrors = {
-//       name: "",
-//       location: "",
-//       phoneNumbers: [],
-//       website: "",
-//       github: "",
-//       cover: "",
-//       avatar: "",
-//     };
-
-//     if (!formData.name || !formData.name.trim())
-//       newErrors.name = "Name is required.";
-//     else if (formData.name.trim().length < 2)
-//       newErrors.name = "Name is too short.";
-
-//     if (!formData.location || !formData.location.trim()) {
-//       newErrors.location = "Location is required.";
-//     }
-
-//     newErrors.phoneNumbers = (formData.phoneNumbers || []).map((p) =>
-//       p ? (validatePhone(p) ? "" : "Invalid phone number") : ""
-//     );
-
-//     // website must start with http/https
-//     if (formData.socialLinks?.website) {
-//       if (!isValidWebsite(formData.socialLinks.website)) {
-//         newErrors.website = "Enter a valid website (must start with http/https).";
-//       }
-//     }
-
-//     // github validation
-//     if (formData.socialLinks?.github) {
-//       if (!isValidGithub(formData.socialLinks.github)) {
-//         newErrors.github = "Enter a valid GitHub username or URL.";
-//       }
-//     }
-
-//     setErrors(newErrors);
-
-//     const hasErr =
-//       newErrors.name ||
-//       newErrors.location ||
-//       newErrors.website ||
-//       newErrors.github ||
-//       newErrors.cover ||
-//       newErrors.avatar ||
-//       newErrors.phoneNumbers.some(Boolean);
-
-//     return !hasErr;
-//   };
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     if (!validateAll()) return;
-
-//     const payload = {
-//       ...formData,
-//       phone: formData.phoneNumbers,
-//     };
-//     onSave(payload);
-//     onClose();
-//   };
-
-//   if (!isOpen) return null;
-
-//   return (
-//     <Modal
-//       show={isOpen}
-//       onClose={onClose}
-//       title="Enhance Profile"
-//       widthClass="max-w-2xl"
-//     >
-//       <form onSubmit={handleSubmit} className="p-2  space-y-6">
-//         {/* Cover + Avatar */} 
-//         <div className="relative w-full">
-//           {/* Cover */}
-//           <div className="relative w-full h-32 md:h-40 rounded-lg overflow-hidden border border-gray-400 bg-[#070C11]">
-//             {formData.cover ? (
-//               <img
-//                 src={formData.cover}
-//                 alt="Cover"
-//                 className="w-full h-full object-cover"
-//               />
-//             ) : (
-//               <div className="w-full h-full flex items-center justify-center text-gray-400"></div>
-//             )}
-
-//             {/* When cover exists: show camera + remove. When not exists: show only camera */}
-//             <div className="absolute inset-0 flex justify-center items-center gap-2">
-//               <button
-//                 type="button"
-//                 onClick={() => coverInputRef.current.click()}
-//                 className="bg-black/50 rounded-full p-2 hover:bg-black/70 transition"
-//                 aria-label="Edit cover"
-//               >
-//                 <RiCameraAiLine className="text-gray-200 text-2xl" />
-//               </button>
-
-//               {formData.cover && (
-//                 <button
-//                   type="button"
-//                   onClick={removeCover}
-//                   className="bg-black/50 rounded-full p-2 hover:bg-black/70 transition"
-//                   aria-label="Remove cover"
-//                 >
-//                   <RxCross1 className="text-gray-200 text-2xl" />
-//                 </button>
-//               )}
-//             </div>
-
-//             <input
-//               type="file"
-//               accept="image/*"
-//               ref={coverInputRef}
-//               onChange={(e) => handleFileChange(e, "cover")}
-//               className="hidden"
-//             />
-//           </div>
-//           {errors.cover && (
-//             <p className="text-red-500 text-sm mt-1">{errors.cover}</p>
-//           )}
-
-//           {/* Avatar */}
-//           <div className="absolute -bottom-12 left-6 w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border border-gray-400 bg-[#070C11]">
-//   {formData.avatar ? (
-//     <img
-//       src={formData.avatar}
-//       alt="Avatar"
-//       className="w-full h-full object-cover"
-//     />
-//   ) : (
-//     <div className="w-full h-full flex items-center justify-center text-gray-400"></div>
-//   )}
-
-//   {/* Avatar action buttons */}
-//   <div className="absolute inset-0 flex justify-center items-center gap-2">
-//     {/* Re-upload button */}
-//     <button
-//       type="button"
-//       onClick={() => avatarInputRef.current.click()}
-//       className="bg-black/50 rounded-full p-2 hover:bg-black/70 transition"
-//       aria-label="Edit avatar"
-//     >
-//       <RiCameraAiLine className="text-gray-200 text-xl" />
-//     </button>
-
-//     {/* Remove button (only if avatar exists) */}
-//     {formData.avatar && (
-//       <button
-//         type="button"
-//         onClick={removeavatar}
-//         className="bg-black/50 rounded-full p-2 hover:bg-black/70 transition"
-//         aria-label="Remove avatar"
-//       >
-//         <RxCross1 className="text-gray-200 text-xl" />
-//       </button>
-//     )}
-//   </div>
-
-//   <input
-//     type="file"
-//     accept="image/*"
-//     ref={avatarInputRef}
-//     onChange={(e) => handleFileChange(e, "avatar")}
-//     className="hidden"
-//   />
-// </div>
-// {errors.avatar && (
-//   <p className="text-red-500 text-sm mt-1">{errors.avatar}</p>
-// )}
-//         </div>
-        
-
-//         {/* Form Fields */}
-//         <div className="mt-16 space-y-4">
-//           <InputWithCount
-//             placeholder="Full Name"
-//             value={formData.name}
-//             onChange={(val) => handleChange("name", val)}
-//             maxLength={50}
-//             error={errors.name}
-//           />
-
-//           <InputWithCount
-//             placeholder="Headline"
-//             value={formData.headline}
-//             onChange={(val) => handleChange("headline", val)}
-//             maxLength={200}
-//           />
-
-//           <InputWithCount
-//             type="email"
-//             placeholder="Email"
-//             value={formData.email}
-//             onChange={() => {}}
-//             maxLength={100}
-//             disabled
-//             className="bg-gray-600/40 cursor-not-allowed"
-//           />
-
-//           <InputWithCount
-//             placeholder="Location"
-//             value={formData.location}
-//             onChange={(val) => handleChange("location", val)}
-//             maxLength={120}
-//             error={errors.location}
-//           />
-
-//           {/* Phone Numbers */}
-//           <div>
-//             <label className="block text-sm font-medium mb-1 text-white">
-//               Phone Numbers
-//             </label>
-//             {formData.phoneNumbers.map((phone, idx) => (
-//               <div key={idx} className="mb-2">
-//                 <InputWithCount
-//                   type="tel"
-//                   placeholder={`Phone ${idx + 1}`}
-//                   value={phone}
-//                   onChange={(val) => {
-//                     // allow + and digits and separators
-//                     const clean = val.replace(/[^0-9+\-\s()]/g, "");
-//                     handlePhoneChange(idx, clean);
-//                   }}
-//                   maxLength={20}
-//                   error={errors.phoneNumbers && errors.phoneNumbers[idx]}
-//                 />
-//               </div>
-//             ))}
-//             {formData.phoneNumbers.length < 2 && (
-//               <button
-//                 type="button"
-//                 onClick={addPhoneNumber}
-//                 className="mt-2 flex items-center text-blue-500 text-sm hover:underline"
-//               >
-//                 <Plus size={16} className="mr-1" /> Add Phone Number
-//               </button>
-//             )}
-//           </div>
-
-//           {/* Social Links */}
-//           <div className="space-y-4">
-//             <label className="block text-sm font-medium text-white">
-//               Social Links
-//             </label>
-//             <InputWithCount
-//               placeholder="GitHub (username or https://github.com/username)"
-//               value={formData.socialLinks.github}
-//               onChange={(val) => {
-//                 handleSocialChange("github", val);
-//                 if (val && isValidGithub(val)) setErrors((p) => ({ ...p, github: "" }));
-//               }}
-//               maxLength={120}
-//               error={errors.github}
-//             />
-//             <div>
-//               <InputWithCount
-//                 placeholder="Website (https://yourwebsite.com)"
-//                 value={formData.socialLinks.website}
-//                 onChange={(val) => {
-//                   handleSocialChange("website", val);
-//                   if (val && isValidWebsite(val)) setErrors((p) => ({ ...p, website: "" }));
-//                 }}
-//                 maxLength={120}
-//                 error={errors.website}
-//               />
-//             </div>
-//           </div>
-//         </div>
-
-//         {/* Actions */}
-//         <div className="sticky bg-[#10151B] right-0 -bottom-5 py-2">
-//        <div className="flex   justify-end gap-3 mb-2">
-//           <Button
-//             type="button"
-//             onClick={onClose}
-//             buttonclass="bg-gray-300 text-black"
-//           >
-//             Cancel
-//           </Button>
-//           <Button type="submit" buttonclass="!bg-blue-600 text-white">
-//             Save
-//           </Button>
-//         </div>
-//         </div>
-      
-//       </form>
-
-//       {/* Image Editor Modal */}
-//       <ImageEditorModal
-//         show={editorOpen}
-//         onClose={handleEditorCancel}
-//         image={editorImage}
-//         onSave={handleEditorSave}
-//         mode={editorMode === "avatar" ? "avatar" : "cover"}
-//       />
-//     </Modal>
-//   );
-// }
-
-
-import React, { useEffect, useState } from "react";
-import { InputWithCount } from "../components/FormInput";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 import { RiCameraAiLine } from "react-icons/ri";
+import { Plus } from "lucide-react";
+import { InputWithCount } from "../components/FormInput";
+import Button from "../components/Button";
+import Modal from "../components/Modal";
+import ImageEditorModal from "./ImageEditorModal";
 import { RxCross1 } from "react-icons/rx";
 
 export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
@@ -956,9 +473,26 @@ export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
     avatar: "",
   });
 
-  // Reset only when modal opens
+  const [errors, setErrors] = useState({
+    name: "",
+    location: "",
+    phoneNumbers: [],
+    website: "",
+    github: "",
+    cover: "",
+    avatar: "",
+  });
+
+  const coverInputRef = useRef(null);
+  const avatarInputRef = useRef(null);
+
+  // editor state
+  const [editorOpen, setEditorOpen] = useState(false);
+  const [editorMode, setEditorMode] = useState("cover"); // "cover" | "avatar"
+  const [editorImage, setEditorImage] = useState(null);
+
   useEffect(() => {
-    if (isOpen && user) {
+    if (user) {
       setFormData({
         name: user?.name || "",
         headline: user?.headline || "",
@@ -972,67 +506,435 @@ export default function ContactInfoModal({ isOpen, onClose, user, onSave }) {
         cover: user?.cover || "",
         avatar: user?.avatar || "",
       });
+      setErrors((prev) => ({
+        ...prev,
+        phoneNumbers: (user?.phone || []).map(() => ""),
+      }));
     }
-  }, [isOpen, user]);
+  }, [user]);
 
-  const handleChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+  const handleChange = (key, value) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
+    if (key === "name" && value.trim()) setErrors((p) => ({ ...p, name: "" }));
+    if (key === "location" && value.trim())
+      setErrors((p) => ({ ...p, location: "" }));
+    if (key === "cover" && value === "") setErrors((p) => ({ ...p, cover: "" }));
+    if (key === "avatar" && value === "") setErrors((p) => ({ ...p, avatar: "" }));
   };
 
-  const handleSave = () => {
-    onSave(formData);
+  // Phone handling
+  const handlePhoneChange = (index, value) => {
+    const updated = [...formData.phoneNumbers];
+    updated[index] = value;
+    setFormData((prev) => ({ ...prev, phoneNumbers: updated }));
+
+    const phoneErrs = [...(errors.phoneNumbers || [])];
+    phoneErrs[index] = value ? (validatePhone(value) ? "" : "Invalid phone number") : "";
+    setErrors((prev) => ({ ...prev, phoneNumbers: phoneErrs }));
+  };
+
+  const addPhoneNumber = () => {
+    if (formData.phoneNumbers.length >= 2) return;
+    setFormData((prev) => ({
+      ...prev,
+      phoneNumbers: [...prev.phoneNumbers, ""],
+    }));
+    setErrors((prev) => ({
+      ...prev,
+      phoneNumbers: [...(prev.phoneNumbers || []), ""],
+    }));
+  };
+
+  const handleSocialChange = (platform, value) =>
+    setFormData((prev) => ({
+      ...prev,
+      socialLinks: { ...prev.socialLinks, [platform]: value },
+    }));
+
+  // file upload → editor
+  const handleFileChange = (e, type) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setErrors((prev) => ({ ...prev, [type]: "Please upload a valid image file." }));
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setErrors((prev) => ({ ...prev, [type]: "File too large (max 5MB)." }));
+      return;
+    }
+    setErrors((prev) => ({ ...prev, [type]: "" }));
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      setEditorMode(type);
+      setEditorImage(reader.result);
+      setEditorOpen(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleEditorSave = (result) => {
+    if (!result || !result.url) {
+      setEditorOpen(false);
+      setEditorImage(null);
+      return;
+    }
+    setFormData((prev) => ({ ...prev, [editorMode]: result.url }));
+    setEditorOpen(false);
+    setEditorImage(null);
+    setErrors((prev) => ({ ...prev, [editorMode]: "" }));
+  };
+
+  const handleEditorCancel = () => {
+    setEditorOpen(false);
+    setEditorImage(null);
+  };
+
+  // New: remove cover
+  const removeCover = () => {
+    setFormData((prev) => ({ ...prev, cover: "" }));
+    setErrors((prev) => ({ ...prev, cover: "" }));
+  };
+const removeavatar = () => {
+    setFormData((prev) => ({ ...prev, avatar: "" }));
+    setErrors((prev) => ({ ...prev, avatar: "" }));
+  };
+
+  
+  // Validation helpers
+  function validatePhone(value) {
+    if (!value) return false; // caller should handle empty as "no input"
+    // strip common separators but keep leading +
+    const trimmed = value.trim();
+    // if starts with + => international
+    if (trimmed.startsWith("+")) {
+      const digits = trimmed.replace(/\D/g, "");
+      return digits.length >= 10 && digits.length <= 15;
+    } else {
+      // allow formats like (123) 456-7890 etc but count digits
+      const digits = trimmed.replace(/\D/g, "");
+      // Accept exactly 10 digits for local numbers only
+      return digits.length === 10;
+    }
+  }
+
+  function isValidWebsite(url) {
+    if (!url) return true;
+    const site = url.trim();
+    const urlPattern = /^(https?:\/\/)([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(\/.*)?$/;
+    return urlPattern.test(site);
+  }
+
+ function isValidGithub(input) {
+  if (!input) return false;
+  const s = input.trim();
+
+  // ✅ must start with https://github.com/, http://github.com/, or github.com/
+  const urlPattern = /^(https?:\/\/)?(www\.)?github\.com\/[a-zA-Z0-9-]+$/;
+
+  return urlPattern.test(s);
+}
+
+  const validateAll = () => {
+    const newErrors = {
+      name: "",
+      location: "",
+      phoneNumbers: [],
+      website: "",
+      github: "",
+      cover: "",
+      avatar: "",
+    };
+
+    if (!formData.name || !formData.name.trim())
+      newErrors.name = "Name is required.";
+    else if (formData.name.trim().length < 2)
+      newErrors.name = "Name is too short.";
+
+    if (!formData.location || !formData.location.trim()) {
+      newErrors.location = "Location is required.";
+    }
+
+    newErrors.phoneNumbers = (formData.phoneNumbers || []).map((p) =>
+      p ? (validatePhone(p) ? "" : "Invalid phone number") : ""
+    );
+
+    // website must start with http/https
+    if (formData.socialLinks?.website) {
+      if (!isValidWebsite(formData.socialLinks.website)) {
+        newErrors.website = "Enter a valid website (must start with http/https).";
+      }
+    }
+
+    // github validation
+    if (formData.socialLinks?.github) {
+      if (!isValidGithub(formData.socialLinks.github)) {
+        newErrors.github = "Enter a valid GitHub username or URL.";
+      }
+    }
+
+    setErrors(newErrors);
+
+    const hasErr =
+      newErrors.name ||
+      newErrors.location ||
+      newErrors.website ||
+      newErrors.github ||
+      newErrors.cover ||
+      newErrors.avatar ||
+      newErrors.phoneNumbers.some(Boolean);
+
+    return !hasErr;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!validateAll()) return;
+
+    const payload = {
+      ...formData,
+      phone: formData.phoneNumbers,
+    };
+    onSave(payload);
     onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
-      <div className="bg-[#10151B] p-6 rounded-2xl w-[90%] max-w-lg border border-gray-700">
-        <h2 className="text-lg font-semibold text-white mb-4">Edit Profile</h2>
+    <Modal
+      show={isOpen}
+      onClose={onClose}
+      title="Enhance Profile"
+      widthClass="max-w-2xl"
+    >
+      <form onSubmit={handleSubmit} className="p-2  space-y-6">
+        {/* Cover + Avatar */} 
+        <div className="relative w-full">
+          {/* Cover */}
+          <div className="relative w-full h-32 md:h-40 rounded-lg overflow-hidden border border-gray-400 bg-[#070C11]">
+            {formData.cover ? (
+              <img
+                src={formData.cover}
+                alt="Cover"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center text-gray-400"></div>
+            )}
 
-        <div className="space-y-4">
+            {/* When cover exists: show camera + remove. When not exists: show only camera */}
+            <div className="absolute inset-0 flex justify-center items-center gap-2">
+              <button
+                type="button"
+                onClick={() => coverInputRef.current.click()}
+                className="bg-black/50 rounded-full p-2 hover:bg-black/70 transition"
+                aria-label="Edit cover"
+              >
+                <RiCameraAiLine className="text-gray-200 text-2xl" />
+              </button>
+
+              {formData.cover && (
+                <button
+                  type="button"
+                  onClick={removeCover}
+                  className="bg-black/50 rounded-full p-2 hover:bg-black/70 transition"
+                  aria-label="Remove cover"
+                >
+                  <RxCross1 className="text-gray-200 text-2xl" />
+                </button>
+              )}
+            </div>
+
+            <input
+              type="file"
+              accept="image/*"
+              ref={coverInputRef}
+              onChange={(e) => handleFileChange(e, "cover")}
+              className="hidden"
+            />
+          </div>
+          {errors.cover && (
+            <p className="text-red-500 text-sm mt-1">{errors.cover}</p>
+          )}
+
+          {/* Avatar */}
+          <div className="absolute -bottom-12 left-6 w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border border-gray-400 bg-[#070C11]">
+  {formData.avatar ? (
+    <img
+      src={formData.avatar}
+      alt="Avatar"
+      className="w-full h-full object-cover"
+    />
+  ) : (
+    <div className="w-full h-full flex items-center justify-center text-gray-400"></div>
+  )}
+
+  {/* Avatar action buttons */}
+  <div className="absolute inset-0 flex justify-center items-center gap-2">
+    {/* Re-upload button */}
+    <button
+      type="button"
+      onClick={() => avatarInputRef.current.click()}
+      className="bg-black/50 rounded-full p-2 hover:bg-black/70 transition"
+      aria-label="Edit avatar"
+    >
+      <RiCameraAiLine className="text-gray-200 text-xl" />
+    </button>
+
+    {/* Remove button (only if avatar exists) */}
+    {formData.avatar && (
+      <button
+        type="button"
+        onClick={removeavatar}
+        className="bg-black/50 rounded-full p-2 hover:bg-black/70 transition"
+        aria-label="Remove avatar"
+      >
+        <RxCross1 className="text-gray-200 text-xl" />
+      </button>
+    )}
+  </div>
+
+  <input
+    type="file"
+    accept="image/*"
+    ref={avatarInputRef}
+    onChange={(e) => handleFileChange(e, "avatar")}
+    className="hidden"
+  />
+</div>
+{errors.avatar && (
+  <p className="text-red-500 text-sm mt-1">{errors.avatar}</p>
+)}
+        </div>
+        
+
+        {/* Form Fields */}
+        <div className="mt-16 space-y-4">
           <InputWithCount
+            placeholder="Full Name"
             value={formData.name}
             onChange={(val) => handleChange("name", val)}
-            placeholder="Full Name"
-            maxLength={100}
+            maxLength={50}
+            error={errors.name}
           />
+
           <InputWithCount
+            placeholder="Headline"
             value={formData.headline}
             onChange={(val) => handleChange("headline", val)}
-            placeholder="Headline"
-            maxLength={150}
+            maxLength={200}
           />
+
           <InputWithCount
+            type="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={() => {}}
+            maxLength={100}
+            disabled
+            className="bg-gray-600/40 cursor-not-allowed"
+          />
+
+          <InputWithCount
+            placeholder="Location"
             value={formData.location}
             onChange={(val) => handleChange("location", val)}
-            placeholder="Location"
-            maxLength={100}
+            maxLength={120}
+            error={errors.location}
           />
-          <InputWithCount
-            value={formData.email}
-            onChange={(val) => handleChange("email", val)}
-            placeholder="Email"
-            maxLength={150}
-          />
+
+          {/* Phone Numbers */}
+          <div>
+            <label className="block text-sm font-medium mb-1 text-white">
+              Phone Numbers
+            </label>
+            {formData.phoneNumbers.map((phone, idx) => (
+              <div key={idx} className="mb-2">
+                <InputWithCount
+                  type="tel"
+                  placeholder={`Phone ${idx + 1}`}
+                  value={phone}
+                  onChange={(val) => {
+                    // allow + and digits and separators
+                    const clean = val.replace(/[^0-9+\-\s()]/g, "");
+                    handlePhoneChange(idx, clean);
+                  }}
+                  maxLength={20}
+                  error={errors.phoneNumbers && errors.phoneNumbers[idx]}
+                />
+              </div>
+            ))}
+            {formData.phoneNumbers.length < 2 && (
+              <button
+                type="button"
+                onClick={addPhoneNumber}
+                className="mt-2 flex items-center text-blue-500 text-sm hover:underline"
+              >
+                <Plus size={16} className="mr-1" /> Add Phone Number
+              </button>
+            )}
+          </div>
+
+          {/* Social Links */}
+          <div className="space-y-4">
+            <label className="block text-sm font-medium text-white">
+              Social Links
+            </label>
+            <InputWithCount
+              placeholder="GitHub (username or https://github.com/username)"
+              value={formData.socialLinks.github}
+              onChange={(val) => {
+                handleSocialChange("github", val);
+                if (val && isValidGithub(val)) setErrors((p) => ({ ...p, github: "" }));
+              }}
+              maxLength={120}
+              error={errors.github}
+            />
+            <div>
+              <InputWithCount
+                placeholder="Website (https://yourwebsite.com)"
+                value={formData.socialLinks.website}
+                onChange={(val) => {
+                  handleSocialChange("website", val);
+                  if (val && isValidWebsite(val)) setErrors((p) => ({ ...p, website: "" }));
+                }}
+                maxLength={120}
+                error={errors.website}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="flex justify-end gap-3 mt-6">
-          <button
-            className="px-4 py-2 bg-gray-600 rounded-lg text-white"
+        {/* Actions */}
+        <div className="sticky bg-[#10151B] right-0 -bottom-5 py-2">
+       <div className="flex   justify-end gap-3 mb-2">
+          <Button
+            type="button"
             onClick={onClose}
+            buttonclass="bg-gray-300 text-black"
           >
             Cancel
-          </button>
-          <button
-            className="px-4 py-2 bg-blue-600 rounded-lg text-white"
-            onClick={handleSave}
-          >
+          </Button>
+          <Button type="submit" buttonclass="!bg-blue-600 text-white">
             Save
-          </button>
+          </Button>
         </div>
-      </div>
-    </div>
+        </div>
+      
+      </form>
+
+      {/* Image Editor Modal */}
+      <ImageEditorModal
+        show={editorOpen}
+        onClose={handleEditorCancel}
+        image={editorImage}
+        onSave={handleEditorSave}
+        mode={editorMode === "avatar" ? "avatar" : "cover"}
+      />
+    </Modal>
   );
 }
+
