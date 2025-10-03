@@ -324,6 +324,9 @@ import CheckboxField from "../components/CheckboxField";
 import MonthYearSelect from "../components/MonthYearSelect";
 import { MapPin } from "lucide-react";
 import MediaUpload from "../components/MediaUpload";
+import { useDispatch } from "react-redux";
+import { updateSection } from "../store/userSlice";
+
 
 const MAX_LENGTHS = {
   institution: 150,
@@ -359,7 +362,7 @@ const EducationForm = forwardRef(({ initialData = null, onSave, onCancel }, ref)
   const [errors, setErrors] = useState({});
   const [suggestions, setSuggestions] = useState({ institution: [], university: [], location: [] });
   const [isFocusedField, setIsFocusedField] = useState("");
-
+  const dispatch = useDispatch()
   useEffect(() => {
     setFormData(initialData || empty);
     setErrors({});
@@ -442,21 +445,36 @@ const EducationForm = forwardRef(({ initialData = null, onSave, onCancel }, ref)
     return e;
   };
 
-  const handleSubmit = (ev) => {
-    ev?.preventDefault?.();
-    const e = validate();
-    if (Object.keys(e).length) return setErrors(e);
 
-    const finalData = {
-      ...formData,
-      media: formData.media instanceof File ? URL.createObjectURL(formData.media) : formData.media,
+    const handleSubmit = (ev) => {
+      ev?.preventDefault?.();
+      const e = validate();
+      if (Object.keys(e).length) {
+        setErrors(e);
+        return;
+      }
+  
+      const finalData = { ...formData, 
+        media:
+        formData.media instanceof File
+          ? URL.createObjectURL(formData.media) // preview URL
+          : formData.media,
+       };
+  
+      dispatch(
+        updateSection({
+          section: "education",
+          action: initialData?.id ? "update" : "add",
+          id: initialData?.id,
+          data: finalData,
+        })
+      );
+  
+      setFormData(empty);
+      setErrors({});
+      onSave?.(finalData);
     };
-
-    onSave(finalData);
-    setFormData(empty);
-    setErrors({});
-  };
-
+  
   return (
     <form onSubmit={handleSubmit} className="relative">
       <div className="px-4 py-3 space-y-3">

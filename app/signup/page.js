@@ -65,7 +65,7 @@ export default function SpreadsRegister() {
 
     try {
       await dispatch(registerUser(dataToSend)).unwrap();
-      router.replace("/login");
+      router.replace("/signin");
     } catch (err) {
       // Error toast is handled in authSlice
     }

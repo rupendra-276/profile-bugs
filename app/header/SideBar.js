@@ -76,6 +76,11 @@ import { AiOutlineHome, AiFillMessage } from "react-icons/ai";
 import { IoCompassOutline } from "react-icons/io5";
 import { CiCirclePlus } from "react-icons/ci";
 import { LuMessageCircleMore } from "react-icons/lu";
+import { useSelector } from "react-redux";
+import  Dropdown from '../components/Dropdown';
+import { TruncateText } from '../helper/truncateText';
+import { FIELD_LIMITS } from "../constents/constents";
+import ProfileMenu from "./ProfileMenu";
 
 const menuItems = [
   { name: "Home", icon: <AiOutlineHome className="w-7 h-8" />, link: "/" },
@@ -88,11 +93,12 @@ const menuItems = [
 
 export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
   const [showMore, setShowMore] = useState(false);
+  const { currentUser } = useSelector((state) => state.users );
 
   return (
     <aside
-      className={`transition-all sticky top-10  duration-300 border-r h-screen border-gray-400 bg-[#10151B] text-white flex flex-col justify-between
-        ${isSidebarOpen ? "w-56" : "w-16"}`}
+      className={`transition-all sticky top-10   duration-300 border-r h-screen border-gray-400 bg-[#10151B] text-white flex flex-col justify-between
+        ${isSidebarOpen ? "md:w-56" : "md:w-16"}`}
       aria-expanded={isSidebarOpen}
     >
       {/* top menu */}
@@ -148,7 +154,7 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
       </div>
 
       {/* bottom: profile */}
-      <div
+      {/* <div
         className={`p-3 flex items-center  gap-2 mb-16 ${
           isSidebarOpen ? "justify-start" : "justify-center"
         }`}
@@ -160,8 +166,20 @@ export default function Sidebar({ isSidebarOpen, toggleSidebar }) {
           height={36}
           className="w-[36px] h-[36px] rounded-full object-cover"
         />
-        {isSidebarOpen && <span className="hidden sm:block text-sm">Your Name</span>}
-      </div>
+        {isSidebarOpen && <span className="hidden sm:block text-sm">{TruncateText(currentUser.name, FIELD_LIMITS.name)}</span>}
+      </div> */}
+
+      <div
+  className={`p-3 flex items-center mb-16 ${
+    isSidebarOpen ? "justify-start" : "justify-center"
+  }`}
+>
+  <ProfileMenu
+    user={currentUser}
+    isSidebarOpen={isSidebarOpen}
+    onLogout={() => console.log("Logout clicked")}
+  />
+</div>
     </aside>
   );
 }

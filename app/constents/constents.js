@@ -116,7 +116,7 @@ export const footerPolicies = [
 export const FIELD_LIMITS = {
   name: 17,
   headline: 150,
-  location: 25,
+  location: 30,
   youmaynowabout:50,
   email: 30,
   joined: 15,
@@ -132,7 +132,8 @@ export const users = [
     id: "u12345",
     username: "rupendra",
     name: "Rupendra Vishwakarma",
-    headline: "Full Stack Developer | AI + Frontend EnthusiastFull Stack Developer | AI + Frontend EnthusiastFull Stack Developer | AI + Frontend EnthusiastFull Stack Developer | AI + Frontend EnthusiastFull Stack Developer | AI + Frontend Enthusiast",
+    headline:
+      "Enthusiast Full Stack Developer | AI + Frontend Enthusiast",
     location: "India",
     email: "rupendravishwarkam@gmail.com",
     phone: ["9876543210"],
@@ -148,29 +149,21 @@ export const users = [
       twitter: "https://twitter.com/rupendra",
       website: "https://rupendra.dev",
     },
-    followers: 1280,
-    connections: 900,
-    views: 4500,
-    experience: [
-      {
-        id: "exp1",
-        role: "Software Engineer",
-        company: "Google",
-        logo: "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg",
-        duration: "2023 – Present",
-        location: "Bangalore, India",
-        description:
-          "Working on scalable frontend architecture and AI-driven solutions for Google Cloud Platform.",
-      },
+
+    // keep both counts and id lists
+    followersCount: 0,
+    followingCount: 0,
+    followers: [], // actual ids
+    following: [], // actual ids
+
+    collabsCount: 0,
+    connections: [],
+    certificate:[],
+    educations: [
+      
     ],
-    education: [
-      {
-        id: "edu1",
-        name: "IIT Bombay",
-        logo: "https://upload.wikimedia.org/wikipedia/en/0/0a/IIT_Bombay_Logo.svg",
-        degree: "B.Tech in Computer Science",
-        duration: "2016 – 2020",
-      },
+    
+    experiences: [  
     ],
     skills: [
       "React",
@@ -312,8 +305,8 @@ export const users = [
   },
   {
     id: "u12346",
-    name: "Amana Vishwakarma",
     username: "aman2",
+    name: "Amana Vishwakarma",
     headline: "Full Stack Developer | AI + Frontend Enthusiast",
     location: "India",
     email: "amana.vishwakarma@gmail.com",
@@ -324,17 +317,18 @@ export const users = [
     avatar: "https://randomuser.me/api/portraits/women/44.jpg",
     cover:
       "https://images.unsplash.com/photo-1503264116251-35a269479413",
-    socialLinks: {
-      linkedin: "https://linkedin.com/in/amana",
-      github: "https://github.com/amana",
-      twitter: "https://twitter.com/amana",
-      website: "https://amana.dev",
-    },
-    followers: 980,
-    connections: 750,
-    views: 3000,
+
+    followersCount: 0,
+    followingCount: 0,
+    followers: [],
+    following: [],
+
+    collabsCount: 0,
+    connections: [],
+
     experience: [],
     education: [],
+    certificate:[],
     skills: ["React", "Next.js", "MERN", "AI"],
     projects: [],
     posts: [
@@ -373,11 +367,12 @@ export const users = [
         activity: "Posts",
       },
     ],
+
   },
-  {
+    {
     id: "u12347",
     username: "javed23",
-    name: "Javed Akhtar", 
+    name: "Javed Akhtar",
     headline: "Full Stack Developer | AI + Frontend Enthusiast",
     location: "India",
     email: "javed.akhtar@gmail.com",
@@ -387,12 +382,83 @@ export const users = [
     avatar: "https://randomuser.me/api/portraits/men/65.jpg",
     cover:
       "https://images.unsplash.com/photo-1503264116251-35a269479413",
-    socialLinks: {},
-    followers: 1020,
-    connections: 800,
-    views: 4000,
+
+    followersCount: 0,
+    followingCount: 0,
+    followers: [],
+    following: [],
+
+    collabsCount: 0,
+    connections: [],
+
     experience: [],
     education: [],
+    certificate:[],
+    skills: ["React", "Node.js", "Next.js", "AI"],
+    projects: [],
+    posts: [
+      {
+        id: "post1",
+        type: "poll",
+        user: { name: "Javed Akhtar", username: "javed", avatar: "", time: "1h" },
+        content: "Which backend framework do you prefer for production apps?",
+        poll: {
+          question: "Backend Choice?",
+          options: ["Express", "NestJS", "Fastify", "Koa"],
+          votes: [70, 50, 30, 20],
+          timeLeft: "8h left",
+        },
+        tags: ["Backend", "Node.js", "API"],
+        likes: 40,
+        liked: false,
+        saved: false,
+        reposts: 2,
+        comments: [],
+        pollVoted: false,
+        pollSelection: null,
+        activity: "Posts",
+      },
+      {
+        id: "post2",
+        type: "text",
+        user: { name: "Javed Akhtar", username: "javed", avatar: "", time: "2h" },
+        content: "Trying out NestJS with GraphQL integration.",
+        tags: ["NestJS", "GraphQL"],
+        likes: 25,
+        liked: false,
+        saved: false,
+        reposts: 1,
+        comments: [],
+        activity: "Posts",
+      },
+    ],
+    
+  },
+    {
+    id: "u12348",
+    username: "Shiva",
+    name: "Shivanshu ",
+    headline: "Python Full Stack Develoops ",
+    location: "India",
+    email: "javed.akhtar@gmail.com",
+    phone: ["9876543212"],
+    joined: "21 June 2025",
+    about: "",
+    avatar: "https://randomuser.me/api/portraits/men/65.jpg",
+    cover:
+      "https://images.unsplash.com/photo-1503264116251-35a269479413",
+
+    followersCount: 0,
+    followingCount: 0,
+    followers: [],
+    following: [],
+
+    collabsCount: 0,
+    connections: [],
+
+    experience: [],
+    education: [],
+     certificate:[],
     skills: ["React", "Node.js", "Next.js", "AI"],
     projects: [],
     posts: [

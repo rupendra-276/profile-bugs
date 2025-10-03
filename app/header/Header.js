@@ -380,6 +380,9 @@ import SearchBar from "../header/SearchBox"; // adjust path to your SearchBox
 import LinkButton, { NavLinkButton } from "../button/Button";
 import { StaggeredContainer, AnimatedWrapper } from "../animation/animation";
 import { CgMenuGridO } from "react-icons/cg";
+import { IoMdNotificationsOutline } from "react-icons/io";
+import HeaderNotification from './HeaderNotification'
+
 
 const navLinks = [
   { label: "About", href: "/about" },
@@ -502,11 +505,14 @@ export default function Header({ isSidebarOpen, toggleSidebar }) {
         {/* right side actions (desktop) */}
         <div className="flex items-center gap-3">
           {user ? (
-             <div className="flex flex-1">
+             <div className="flex items-center gap-3 flex-1">
+              <HeaderNotification />
+             
             <SearchBar />
             <button>
               <CgMenuGridO className="text-gray-300 text-3xl font-light hover:cursor-pointer" />
             </button>
+
           </div>
           ) : (
             <div className="hidden md:flex items-center space-x-2 lg:space-x-3 xl:space-x-4 flex-shrink-0">

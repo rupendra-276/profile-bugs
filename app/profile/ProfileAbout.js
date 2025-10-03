@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from "react";
 import TextAreaField from "../components/TextAreaField";
 import Button from "../components/Button";
+import { useDispatch } from "react-redux";
+import { updateSection } from "../store/userSlice";
+
 
 export default function ProfileAbout({ about, setAbout, onClose }) {
   const [draft, setDraft] = useState(about || ""); // local editable state

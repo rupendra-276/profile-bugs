@@ -25,7 +25,7 @@
 // const dummyLocations = ["London, United Kingdom", "New York, USA", "Bangalore, India", "Remote", "San Francisco, USA"];
 
 // export default function ExperienceForm({ initialData, onSave, onCancel }) {
-//   const [formData, setFormData] = useState(initialFormState());
+//   const [formData, setformData] = useState(initialFormState());
 //   const [errors, setErrors] = useState({});
 //   const [suggestions, setSuggestions] = useState({ jobTitle: [], company: [], location: [] });
 
@@ -47,12 +47,12 @@
 //   }
 
 //   useEffect(() => {
-//     if (initialData) setFormData(initialData);
+//     if (initialData) setformData(initialData);
 //   }, [initialData]);
 
 //   const handleChange = (e) => {
 //     const { name, value, type, checked } = e.target;
-//     setFormData((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
+//     setformData((prev) => ({ ...prev, [name]: type === "checkbox" ? checked : value }));
 
 //     // Suggestion handling
 //     if (["jobTitle", "company", "location"].includes(name)) {
@@ -64,15 +64,15 @@
 //   };
 
 //   const handleDateChange = (field, { type, value }) => {
-//     setFormData((prev) => ({ ...prev, [field]: { ...prev[field], [type]: value } }));
+//     setformData((prev) => ({ ...prev, [field]: { ...prev[field], [type]: value } }));
 //   };
 
 //   const handleSkillsChange = (newSkills) => {
-//     setFormData((prev) => ({ ...prev, skills: newSkills.slice(0, MAX_SKILLS) }));
+//     setformData((prev) => ({ ...prev, skills: newSkills.slice(0, MAX_SKILLS) }));
 //   };
 
 //   const handleAchievementsChange = (newAchievements) => {
-//     setFormData((prev) => ({ ...prev, keyAchievements: newAchievements.slice(0, MAX_ACHIEVEMENTS) }));
+//     setformData((prev) => ({ ...prev, keyAchievements: newAchievements.slice(0, MAX_ACHIEVEMENTS) }));
 //   };
 
 //   const validateForm = () => {
@@ -107,7 +107,7 @@
 //       return;
 //     }
 //     onSave(formData);
-//     setFormData(initialFormState());
+//     setformData(initialFormState());
 //     setErrors({});
 //   };
 
@@ -120,7 +120,7 @@
 //         {suggestions.jobTitle.length > 0 && (
 //           <ul className="border rounded bg-white text-black shadow">
 //             {suggestions.jobTitle.map((s, i) => (
-//               <li key={i} className="p-1 cursor-pointer hover:bg-gray-200" onClick={() => setFormData((p) => ({ ...p, jobTitle: s }))}>
+//               <li key={i} className="p-1 cursor-pointer hover:bg-gray-200" onClick={() => setformData((p) => ({ ...p, jobTitle: s }))}>
 //                 {s}
 //               </li>
 //             ))}
@@ -132,7 +132,7 @@
 //         {suggestions.company.length > 0 && (
 //           <ul className="border rounded bg-white text-black shadow">
 //             {suggestions.company.map((s, i) => (
-//               <li key={i} className="p-1 cursor-pointer hover:bg-gray-200" onClick={() => setFormData((p) => ({ ...p, company: s }))}>
+//               <li key={i} className="p-1 cursor-pointer hover:bg-gray-200" onClick={() => setformData((p) => ({ ...p, company: s }))}>
 //                 {s}
 //               </li>
 //             ))}
@@ -161,7 +161,7 @@
 //         {suggestions.location.length > 0 && (
 //           <ul className="border rounded bg-white text-black shadow">
 //             {suggestions.location.map((s, i) => (
-//               <li key={i} className="p-1 cursor-pointer hover:bg-gray-200" onClick={() => setFormData((p) => ({ ...p, location: s }))}>
+//               <li key={i} className="p-1 cursor-pointer hover:bg-gray-200" onClick={() => setformData((p) => ({ ...p, location: s }))}>
 //                 {s}
 //               </li>
 //             ))}
@@ -259,25 +259,25 @@
 //     keyAchievements: [],
 //   };
 
-//   const [formData, setFormData] = useState(initialData || empty);
+//   const [formData, setformData] = useState(initialData || empty);
 //   const [errors, setErrors] = useState({});
 //   const [suggestions, setSuggestions] = useState({ jobTitle: [], company: [], location: [] });
 
 //   // sync when initialData changes
 //   useEffect(() => {
-//     setFormData(initialData || empty);
+//     setformData(initialData || empty);
 //     setErrors({});
 //   }, [initialData]);
 
 //   // expose submit/reset methods
 //   useImperativeHandle(ref, () => ({
 //     submit: () => handleSubmit(),
-//     reset: () => setFormData(initialData || empty),
+//     reset: () => setformData(initialData || empty),
 //   }));
 
 //   const handleChange = (e) => {
 //     const { name, value, type, checked } = e.target;
-//     setFormData((p) => ({ ...p, [name]: type === "checkbox" ? checked : value }));
+//     setformData((p) => ({ ...p, [name]: type === "checkbox" ? checked : value }));
 
 //     // suggestions
 //     if (name === "jobTitle" || name === "company" || name === "location") {
@@ -288,15 +288,15 @@
 //   };
 
 //   const handleDateChange = (field, { type, value }) => {
-//     setFormData(p => ({ ...p, [field]: { ...p[field], [type]: value } }));
+//     setformData(p => ({ ...p, [field]: { ...p[field], [type]: value } }));
 //   };
 
 //   const handleSkillsChange = (newSkills) => {
-//     setFormData(p => ({ ...p, skills: newSkills.slice(0, MAX_SKILLS) }));
+//     setformData(p => ({ ...p, skills: newSkills.slice(0, MAX_SKILLS) }));
 //   };
 
 //   const handleAchievementsChange = (newAchievements) => {
-//     setFormData(p => ({ ...p, keyAchievements: newAchievements.slice(0, MAX_ACHIEVEMENTS) }));
+//     setformData(p => ({ ...p, keyAchievements: newAchievements.slice(0, MAX_ACHIEVEMENTS) }));
 //   };
 
 //   const validate = () => {
@@ -327,13 +327,13 @@
 //       return;
 //     }
 //     onSave(formData);
-//     setFormData(empty);
+//     setformData(empty);
 //     setErrors({});
 //   };
 
 //   // helper for selecting suggestion
 //   const applySuggestion = (field, value) => {
-//     setFormData(p => ({ ...p, [field]: value }));
+//     setformData(p => ({ ...p, [field]: value }));
 //     setSuggestions(s => ({ ...s, [field]: [] }));
 //   };
 
@@ -456,7 +456,7 @@
 //   name="description"
 //   value={formData.description || ""}
 //   onChange={(newValue) =>
-//     setFormData((p) => ({ ...p, description: newValue }))
+//     setformData((p) => ({ ...p, description: newValue }))
 //   }
 //   placeholder="What you did, tech, impact..."
 //   error={errors.description}
@@ -529,18 +529,18 @@
 //     media: null
 //   };
 
-//   const [formData, setFormData] = useState(initialData || empty);
+//   const [formData, setformData] = useState(initialData || empty);
 //   const [errors, setErrors] = useState({});
 //   const [suggestions, setSuggestions] = useState({ jobTitle: [], company: [], location: [] });
 //   const [isFocused, setIsFocused] = useState(false);
 //   useEffect(() => {
-//     setFormData(initialData || empty);
+//     setformData(initialData || empty);
 //     setErrors({});
 //   }, [initialData]);
 
 //   useImperativeHandle(ref, () => ({
 //     submit: () => handleSubmit(),
-//     reset: () => setFormData(initialData || empty),
+//     reset: () => setformData(initialData || empty),
 //   }));
 
 //   const handleChange = (input) => {
@@ -549,7 +549,7 @@
 //     const { name, value, type, checked } = input.target;
 //     const finalValue = type === "checkbox" ? checked : value;
 
-//     setFormData((p) => ({ ...p, [name]: finalValue }));
+//     setformData((p) => ({ ...p, [name]: finalValue }));
 
 //     if (["jobTitle", "company", "location"].includes(name)) {
 //       const dataset = name === "jobTitle" ? JOB_TITLES : name === "company" ? COMPANIES : LOCATIONS;
@@ -561,7 +561,7 @@
 //   };
 
 //   const handleValueChange = (field, value) => {
-//     setFormData((p) => ({ ...p, [field]: value }));
+//     setformData((p) => ({ ...p, [field]: value }));
 
 //     if (["jobTitle", "company", "location"].includes(field)) {
 //       const dataset = field === "jobTitle" ? JOB_TITLES : field === "company" ? COMPANIES : LOCATIONS;
@@ -573,15 +573,15 @@
 //   };
 
 //   const handleDateChange = (field, { type, value }) => {
-//     setFormData((p) => ({ ...p, [field]: { ...p[field], [type]: value } }));
+//     setformData((p) => ({ ...p, [field]: { ...p[field], [type]: value } }));
 //   };
 
 //   const handleSkillsChange = (newSkills) => {
-//     setFormData((p) => ({ ...p, skills: newSkills.slice(0, MAX_SKILLS) }));
+//     setformData((p) => ({ ...p, skills: newSkills.slice(0, MAX_SKILLS) }));
 //   };
 
 //   const handleAchievementsChange = (newAchievements) => {
-//     setFormData((p) => ({ ...p, keyAchievements: newAchievements.slice(0, MAX_ACHIEVEMENTS) }));
+//     setformData((p) => ({ ...p, keyAchievements: newAchievements.slice(0, MAX_ACHIEVEMENTS) }));
 //   };
 
 //   const validate = () => {
@@ -613,12 +613,12 @@
 //       return;
 //     }
 //     onSave(formData);
-//     setFormData(empty);
+//     setformData(empty);
 //     setErrors({});
 //   };
 
 //   const applySuggestion = (field, value) => {
-//     setFormData((p) => ({ ...p, [field]: value }));
+//     setformData((p) => ({ ...p, [field]: value }));
 //     setSuggestions((s) => ({ ...s, [field]: [] }));
 //   };
 
@@ -768,7 +768,7 @@
 //           label="Job Description *"
 //           name="description"
 //           value={formData.description || ""}
-//           onChange={(newValue) => setFormData((p) => ({ ...p, description: newValue }))}
+//           onChange={(newValue) => setformData((p) => ({ ...p, description: newValue }))}
 //           placeholder="What you did, tech, impact..."
 //           error={errors.description}
 //           maxLength={MAX_LENGTHS.description}
@@ -804,7 +804,7 @@
 //   accept="image/*"
 //   maxSizeMB={1}
 //   initialFile={formData.expemedia} // ✅ show existing logo when editing
-//   onFileSelect={(file) => setFormData((p) => ({ ...p, logo: file }))}
+//   onFileSelect={(file) => setformData((p) => ({ ...p, logo: file }))}
 // />
 //       {/* Actions */}
 //       <div className="sticky bg-[#10151B] right-0 -bottom-5 py-2">
@@ -844,6 +844,8 @@ import CheckboxField from "../components/CheckboxField";
 import MonthYearSelect from "../components/MonthYearSelect";
 import { MapPin } from "lucide-react";
 import MediaUpload from "../components/MediaUpload";
+import { useDispatch } from "react-redux";
+import { updateSection } from "../store/userSlice";
 
 const MAX_SKILLS = 8;
 const MAX_ACHIEVEMENTS = 4;
@@ -875,25 +877,25 @@ const ExperienceForm = forwardRef(({ initialData = null, onSave, onCancel }, ref
     media: null, // ✅ media field define
   };
 
-  const [formData, setFormData] = useState(initialData || empty);
+  const [formData, setformData] = useState(initialData || empty);
   const [errors, setErrors] = useState({});
   const [suggestions, setSuggestions] = useState({ jobTitle: [], company: [], location: [] });
   const [isFocused, setIsFocused] = useState(false);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    setFormData(initialData || empty);
+    setformData(initialData || empty);
     setErrors({});
   }, [initialData]);
 
   useImperativeHandle(ref, () => ({
     submit: () => handleSubmit(),
-    reset: () => setFormData(initialData || empty),
+    reset: () => setformData(initialData || empty),
   }));
 
   const handleChange = (input) => {
     const { name, value, type, checked } = input.target;
     const finalValue = type === "checkbox" ? checked : value;
-    setFormData((p) => ({ ...p, [name]: finalValue }));
+    setformData((p) => ({ ...p, [name]: finalValue }));
 
     if (["jobTitle", "company", "location"].includes(name)) {
       const dataset = name === "jobTitle" ? JOB_TITLES : name === "company" ? COMPANIES : LOCATIONS;
@@ -905,7 +907,7 @@ const ExperienceForm = forwardRef(({ initialData = null, onSave, onCancel }, ref
   };
 
   const handleValueChange = (field, value) => {
-    setFormData((p) => ({ ...p, [field]: value }));
+    setformData((p) => ({ ...p, [field]: value }));
     if (["jobTitle", "company", "location"].includes(field)) {
       const dataset = field === "jobTitle" ? JOB_TITLES : field === "company" ? COMPANIES : LOCATIONS;
       const filtered = value
@@ -916,15 +918,15 @@ const ExperienceForm = forwardRef(({ initialData = null, onSave, onCancel }, ref
   };
 
   const handleDateChange = (field, { type, value }) => {
-    setFormData((p) => ({ ...p, [field]: { ...p[field], [type]: value } }));
+    setformData((p) => ({ ...p, [field]: { ...p[field], [type]: value } }));
   };
 
   const handleSkillsChange = (newSkills) => {
-    setFormData((p) => ({ ...p, skills: newSkills.slice(0, MAX_SKILLS) }));
+    setformData((p) => ({ ...p, skills: newSkills.slice(0, MAX_SKILLS) }));
   };
 
   const handleAchievementsChange = (newAchievements) => {
-    setFormData((p) => ({ ...p, keyAchievements: newAchievements.slice(0, MAX_ACHIEVEMENTS) }));
+    setformData((p) => ({ ...p, keyAchievements: newAchievements.slice(0, MAX_ACHIEVEMENTS) }));
   };
 
   const validate = () => {
@@ -939,20 +941,41 @@ const ExperienceForm = forwardRef(({ initialData = null, onSave, onCancel }, ref
     return e;
   };
 
-  const handleSubmit = (ev) => {
-    ev?.preventDefault?.();
-    const e = validate();
-    if (Object.keys(e).length) {
-      setErrors(e);
-      return;
-    }
-    onSave(formData);
-    setFormData(empty);
-    setErrors({});
+
+const handleSubmit = (ev) => {
+  ev?.preventDefault?.();
+
+  const e = validate();
+  if (Object.keys(e).length) {
+    setErrors(e);
+    return;
+  }
+
+  // ✅ Avoid shadowing
+  const dataToSave = { 
+    ...formData, 
+    media:
+      formData.media instanceof File
+        ? URL.createObjectURL(formData.media) // preview URL for Redux
+        : formData.media,
   };
 
+  dispatch(
+    updateSection({
+      section: "experience",
+      action: initialData?.id ? "update" : "add",
+      id: initialData?.id,
+      data: dataToSave,
+    })
+  );
+
+  setformData(empty);
+  setErrors({});
+  onSave?.(dataToSave);
+};
+
   const applySuggestion = (field, value) => {
-    setFormData((p) => ({ ...p, [field]: value }));
+    setformData((p) => ({ ...p, [field]: value }));
     setSuggestions((s) => ({ ...s, [field]: [] }));
   };
 
@@ -1102,7 +1125,7 @@ const ExperienceForm = forwardRef(({ initialData = null, onSave, onCancel }, ref
           label="Job Description *"
           name="description"
           value={formData.description || ""}
-          onChange={(newValue) => setFormData((p) => ({ ...p, description: newValue }))}
+          onChange={(newValue) => setformData((p) => ({ ...p, description: newValue }))}
           placeholder="What you did, tech, impact..."
           error={errors.description}
           maxLength={MAX_LENGTHS.description}
@@ -1138,7 +1161,7 @@ const ExperienceForm = forwardRef(({ initialData = null, onSave, onCancel }, ref
           accept="image/*"
           maxSizeMB={2}
           initialFile={formData.media} // ✅ Existing file shown in edit mode
-          onFileSelect={(file) => setFormData((p) => ({ ...p, media: file }))} // ✅ update correct field
+          onFileSelect={(file) => setformData((p) => ({ ...p, media: file }))} // ✅ update correct field
         />
       {/* Actions */}
       <div className="sticky bg-[#10151B] right-0 -bottom-5 py-2">

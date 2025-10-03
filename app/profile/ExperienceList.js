@@ -271,7 +271,7 @@ export default function ExperienceList({ experiences, onAdd, onEdit, onDelete, p
               </div>
 
               {/* Actions only for owner */}
-              {isOwner && (
+              {currentUser && (
                 <div className="flex gap-2">
                   <button onClick={() => onEdit(idx)} className="p-1 border rounded-lg border-blue-300 text-white">
                     <CiEdit />
