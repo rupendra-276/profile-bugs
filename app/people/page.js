@@ -3,6 +3,8 @@ import Link from "next/link";
 import { users } from "../constents/constents";
 
 export default function PeoplePage() {
+  // const currentUser = useSelector((state) => state.users);
+  
   return (
     <div className="bg-[#070C11] min-h-screen text-white p-6">
       <h1 className="text-2xl font-bold mb-6">All People</h1>

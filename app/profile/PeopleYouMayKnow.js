@@ -73,6 +73,8 @@
 
 
 
+
+
 // app/profile/PeopleYouMayKnow.jsx
 "use client";
 import React, { useState } from "react";
@@ -107,58 +109,53 @@ function ProfileAvatar({ name, image }) {
   );
 }
 
-
-export default function PeopleYouMayKnow({ users = [], currentUserId = null, limit = 4 }) {
-
+export default function PeopleYouMayKnow({ users = [], currentUserId = null, limit = 2 }) {
   const suggestions = (users && users.length ? users : []).filter((u) => u.id !== currentUserId);
   const list = suggestions.slice(0, limit);
-  // const [showFullContent, setShowFullContent] = useState(false);  
-
 
   return (
     <div className="p-5 bg-[#10151B] border rounded-[30px] border-gray-400 pr-2">
-        <h2 className="text-white font-semibold text-[20px] my-2">People You May Know</h2>
+      <h2 className="text-white font-semibold text-[20px] my-2">People You May Know</h2>
       <div className="space-y-5">
         {list.map((person) => (
           <div key={person.id} className="border-b border-gray-800 pb-4">
-            <div className="flex items-center gap-3">
-              {/* Avatar + name clickable -> navigates to /:username */}
-              <Link href={`/in/${person.username}`} className="flex items-center gap-3">
-                <ProfileAvatar name={person.name} image={person.avatar || person.avatar} />
-                <div>
-                  <h4 className="font-semibold text-white hover:underline">{TruncateText(person.name, FIELD_LIMITS.name)}</h4>
-                  <p className="text-sm text-gray-100">{TruncateText(person.headline || "", 40)}</p>
-                </div>
-              </Link>
-            </div>
-                <p className="text-gray-200 mt-2">
-                  
-                  {person.about && TruncateText(person.about, FIELD_LIMITS.youmaynowabout, true, "more")}
-            
+            {/* Avatar + Name */}
+            <Link href={`/in/${person.username}`} className="flex items-center gap-3">
+              <ProfileAvatar name={person.name} image={person.avatar} />
+              <div>
+                <h4 className="font-semibold text-white hover:underline">
+                  {TruncateText(person.name, FIELD_LIMITS.name)}
+                </h4>
+                <p className="text-sm text-gray-100">{TruncateText(person.headline || "", 40)}</p>
+              </div>
+            </Link>
+
+            {/* About */}
+            <p className="text-gray-200 mt-2">
+              {person.about && TruncateText(person.about, FIELD_LIMITS.youmaynowabout, true, "more")}
             </p>
 
-
-            <div className="mt-3 flex  gap-2">
+            {/* Buttons */}
+            <div className="mt-3 flex gap-2">
               <div className="w-full md:w-[45%]">
-              <FollowButton targetId={person.id} followclassName="w-full" />
-
+                <FollowButton targetId={person.id} followclassName="w-full" />
               </div>
               <div className="w-full md:w-[45%]">
                 <CollabButton targetId={person.id} collabclass="w-full" />
               </div>
-            
-            </div> 
- 
+            </div>
           </div>
         ))}
 
-        {list.length === 0 && (
-          <p className="text-sm text-gray-400">No suggestions yet.</p>
-        )}
+        {list.length === 0 && <p className="text-sm text-gray-400">No suggestions yet.</p>}
       </div>
-      <div className="text-center my-3">
-        <LinkButton href="poeple" name="View All" />
-      </div>
+
+      {/* show "View All" if more users than limit */}
+      {suggestions.length > limit && (
+        <div className="text-center my-3">
+          <LinkButton showIcon={false} href="/people" name="View All" />
+        </div>
+      )}
     </div>
   );
 }

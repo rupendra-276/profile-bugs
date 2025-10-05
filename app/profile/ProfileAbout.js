@@ -3,19 +3,27 @@
 import React, { useState, useEffect } from "react";
 import TextAreaField from "../components/TextAreaField";
 import Button from "../components/Button";
-import { useDispatch } from "react-redux";
-import { updateSection } from "../store/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { updateSection, updateUser } from "../store/userSlice";
 
 
 export default function ProfileAbout({ about, setAbout, onClose }) {
   const [draft, setDraft] = useState(about || ""); // local editable state
   const [error, setError] = useState("");
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.users?.currentUser);
+
 
   // Determines if user typed something to switch button/title dynamically
   const isEditing = draft !== (about || "");
 
+  useEffect(() => {
+    setDraft(about || "");
+  }, [about]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!draft.trim()) {
       setError("Overview cannot be empty.");
       return;
@@ -25,12 +33,32 @@ export default function ProfileAbout({ about, setAbout, onClose }) {
       return;
     }
 
-    // Update parent state
+    // update parent UI immediately
     setAbout(draft.trim());
-    setError("");
-    onClose(); // close modal after successful update
-  };
 
+    // guard: currentUser must exist (usually it will)
+    if (!currentUser) {
+      setError("No user loaded. Try reloading the page.");
+      return;
+    }
+
+    // build updated user object (no helper)
+    const updatedUser = { ...currentUser, about: draft.trim() };
+
+    // update Redux
+    dispatch(updateUser(updatedUser));
+
+    // persist to localStorage
+    try {
+      localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+    } catch (err) {
+      console.warn("localStorage write failed:", err);
+    }
+
+    setError("");
+    onClose();
+  };
+  
   return (
     <form onSubmit={handleSubmit} className="p-4">
       <h3 className="text-white font-semibold text-lg mb-2">

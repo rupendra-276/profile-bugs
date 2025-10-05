@@ -144,7 +144,7 @@ export default function EducationList({ educations, onAdd, onEdit, onDelete, pro
 
   return (
     <div className="relative">
-      <div className="border-l-2 border-gray-300 ml-6 relative">
+      <div className="border-l-2 border-gray-300 ml-6 mt-4 relative">
         {displayed.map((edu, idx) => (
           <div key={idx} className="relative mb-12 pl-8">
             {/* Logo */}

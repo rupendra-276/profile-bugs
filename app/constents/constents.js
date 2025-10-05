@@ -175,21 +175,7 @@ export const users = [
       "System Design",
     ],
     projects: [
-      {
-        id: "p1",
-        title: "AI-Powered Job Portal",
-        description:
-          "Built a job portal with AI-based recommendations for skill matching.",
-        link: "https://github.com/rupendra/jobportal",
-        tech: ["Next.js", "LangChain", "OpenAI API"],
-      },
-      {
-        id: "p2",
-        title: "Realtime Chat App",
-        description: "End-to-end encrypted chat app with group support.",
-        link: "https://github.com/rupendra/realtime-chat",
-        tech: ["React", "Node.js", "Socket.IO"],
-      },
+
     ],
     posts: [
       {

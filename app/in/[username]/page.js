@@ -87,7 +87,7 @@ export default function UserProfilePage({ params }) {
         {/* Right / Sidebar */}
         <aside className="w-full lg:max-w-[280px] flex flex-col gap-4">
           {isOwner && <ProfileAnalytics />}
-          <PeopleYouMayKnow users={users} currentUserId={user.id} limit={4} />
+          <PeopleYouMayKnow users={users} currentUserId={user.id} limit={2} />
           <JoinCommunities />
         </aside>
 

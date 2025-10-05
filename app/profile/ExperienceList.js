@@ -183,7 +183,7 @@ export default function ExperienceList({ experiences, onAdd, onEdit, onDelete, p
 
   return (
     <div>
-      <div className="relative border-l-2 border-gray-300 ml-2 space-y-8">
+      <div className="relative border-l-2 border-gray-300 ml-2 mt-4 space-y-8">
         {(showAll ? experiences : experiences.slice(0, 2)).map((exp, idx) => (
           <div key={idx} className="relative pl-6">
             {/* Logo */}
